@@ -5,7 +5,7 @@ int main() {
 
   Image image(
       "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test.pbm");
-  std::cout << image[4];
+  image.save_as("testttt");
 
   return 0;
 }

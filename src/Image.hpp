@@ -16,12 +16,17 @@ public:
   Image(const Image &);
 
   Image &operator=(const Image &);
-  int &operator[](int);
+  int &operator[](const int &);
 
-  std::string get_file_name();
-  std::string get_type();
-  std::vector<int> get_vec();
-  int get_height();
-  int get_width();
-  int get_size();
+  std::string get_file_name() const;
+  std::string get_type() const;
+  std::vector<int> get_vec() const;
+  int get_height() const;
+  int get_width() const;
+  int get_size() const;
+
+  bool save();
+  bool save_as(const std::string &);
 };
+
+std::ostream &operator<<(std::ostream &, const Image &);

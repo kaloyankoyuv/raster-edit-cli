@@ -34,16 +34,48 @@ Image &Image::operator=(const Image &other) {
   return *this;
 }
 
-int &Image::operator[](int i) { return this->vec[i]; }
+int &Image::operator[](const int &i) { return this->vec[i]; }
 
-std::string Image::get_file_name() { return this->file_name; }
+std::ostream &operator<<(std::ostream &out, const Image &img) {
+  out << img.get_type() << "\n"
+      << img.get_width() << " " << img.get_height() << "\n";
 
-std::string Image::get_type() { return this->type; }
+  out << img.get_vec()[0] << " ";
+  for (int i = 1; i < img.get_size(); i++) {
+    if (i % img.get_width() == img.get_width() - 1) {
+      out << img.get_vec()[i] << "\n";
+    } else {
+      out << img.get_vec()[i] << " ";
+    }
+  }
 
-std::vector<int> Image::get_vec() { return this->vec; }
+  return out;
+}
 
-int Image::get_width() { return this->width; }
+std::string Image::get_file_name() const { return this->file_name; }
 
-int Image::get_height() { return this->height; }
+std::string Image::get_type() const { return this->type; }
 
-int Image::get_size() { return this->size; }
+std::vector<int> Image::get_vec() const { return this->vec; }
+
+int Image::get_width() const { return this->width; }
+
+int Image::get_height() const { return this->height; }
+
+int Image::get_size() const { return this->size; }
+
+bool Image::save() {
+
+  std::ofstream out_image(this->file_name);
+  out_image << *this;
+
+  return true;
+}
+
+bool Image::save_as(const std::string &new_file_name) {
+
+  std::ofstream out_image(new_file_name);
+  out_image << *this;
+
+  return true;
+}
