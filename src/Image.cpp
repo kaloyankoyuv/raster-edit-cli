@@ -40,8 +40,7 @@ std::ostream &operator<<(std::ostream &out, const Image &img) {
   out << img.get_type() << "\n"
       << img.get_width() << " " << img.get_height() << "\n";
 
-  out << img.get_vec()[0] << " ";
-  for (int i = 1; i < img.get_size(); i++) {
+  for (int i = 0; i < img.get_size(); i++) {
     if (i % img.get_width() == img.get_width() - 1) {
       out << img.get_vec()[i] << "\n";
     } else {
@@ -68,6 +67,7 @@ bool Image::save() {
 
   std::ofstream out_image(this->file_name);
   out_image << *this;
+  out_image.close();
 
   return true;
 }
@@ -76,6 +76,7 @@ bool Image::save_as(const std::string &new_file_name) {
 
   std::ofstream out_image(new_file_name);
   out_image << *this;
+  out_image.close();
 
   return true;
 }
