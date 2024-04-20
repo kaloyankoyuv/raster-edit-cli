@@ -1,8 +1,11 @@
+#include "Image.hpp"
 #include <iostream>
 
 int main() {
 
-  std::cout << "Hello, World!\n";
+  Image image(
+      "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test.pbm");
+  std::cout << image[4];
 
   return 0;
 }

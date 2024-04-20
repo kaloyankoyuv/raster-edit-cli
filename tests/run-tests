@@ -1,6 +1,6 @@
 #!/bin/bash
 
-g++ tests.cpp -o tests
-./tests
+g++ tests.cpp ../src/Image.cpp -o tests &&
+./tests &&
 rm tests
 
