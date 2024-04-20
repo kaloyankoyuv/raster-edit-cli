@@ -1,0 +1,6 @@
+#!/bin/bash
+
+g++ tests.cpp -o tests
+./tests
+rm tests
+
