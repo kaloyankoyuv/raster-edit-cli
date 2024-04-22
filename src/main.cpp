@@ -9,9 +9,11 @@ int main() {
       "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test2.pbm");
 
   std::cout << image;
-  image.rotate("right");
-  std::cout << image;
   image.rotate("left");
+  std::cout << image;
+  image.undo();
+  std::cout << image;
+  image.undo();
   std::cout << image;
   return 0;
 }

@@ -13,6 +13,9 @@ PBM_Image::PBM_Image(const std::string &_file_name) : Image(_file_name) {
     image >> x;
     this->matrix.push_back(x);
   }
+  this->undo_matrix = this->matrix;
+  this->undo_width = this->width;
+  this->undo_height = this->height;
   image.close();
 }
 
@@ -47,7 +50,17 @@ bool PBM_Image::save_as(const std::string &new_file_name) const {
   return true;
 }
 
+bool PBM_Image::undo() {
+  this->matrix = this->undo_matrix;
+  this->width = this->undo_width;
+  this->height = this->undo_height;
+  return true;
+}
+
 bool PBM_Image::negative() {
+  this->undo_matrix = this->matrix;
+  this->undo_width = this->width;
+  this->undo_height = this->height;
   int size = this->width * this->height;
   for (int i = 0; i < size; i++) {
     if (this->matrix[i]) {
@@ -61,6 +74,9 @@ bool PBM_Image::negative() {
 
 bool PBM_Image::rotate(const std::string &direction) {
 
+  this->undo_matrix = this->matrix;
+  this->undo_width = this->width;
+  this->undo_height = this->height;
   rotate_matrix(this->matrix, this->width, this->height, direction);
   return true;
 }

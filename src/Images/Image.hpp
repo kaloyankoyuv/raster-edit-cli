@@ -18,4 +18,5 @@ public:
 
   virtual bool save() const = 0;
   virtual bool save_as(const std::string &) const = 0;
+  virtual bool undo() = 0;
 };
