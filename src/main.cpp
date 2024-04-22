@@ -1,11 +1,17 @@
-#include "Image.hpp"
+#include "Images/PBM_Image.hpp"
 #include <iostream>
 
 int main() {
 
-  Image image(
+  PBM_Image image(
       "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test.pbm");
-  image.save_as("testttt");
+  PBM_Image image2(
+      "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test2.pbm");
 
+  std::cout << image;
+  image.rotate("right");
+  std::cout << image;
+  image.rotate("left");
+  std::cout << image;
   return 0;
 }

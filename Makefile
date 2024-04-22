@@ -1,6 +1,8 @@
-raster-edit-cli: src/main.cpp src/Image.cpp
+raster-edit-cli: src/*.cpp src/Images/*.cpp
 	@mkdir -p build
-	@g++ src/main.cpp src/Image.cpp -o build/raster-edit-cli
+	@g++ 	src/*.cpp \
+		src/Images/*.cpp \
+		-o build/raster-edit-cli
 
 clean:
 	@rm -rf build
