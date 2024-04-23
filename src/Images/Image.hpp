@@ -9,8 +9,6 @@ protected:
   int height;
 
 public:
-  Image(const std::string &);
-
   std::string get_file_name() const;
   std::string get_type() const;
   int get_width() const;

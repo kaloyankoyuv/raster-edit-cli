@@ -2,17 +2,20 @@
 #include "../MatrixAlgorithms/matrix_algorithms.hpp"
 #include <fstream>
 
-PBM_Image::PBM_Image(const std::string &_file_name) : Image(_file_name) {
+PBM_Image::PBM_Image(const std::string &_file_name) {
 
   std::ifstream image(_file_name);
-  std::string s;
-  image >> s >> s >> s;
-  bool x;
+
+  this->file_name = _file_name;
+  image >> this->type >> this->width >> this->height;
+
   int size = this->width * this->height;
+  bool x;
   for (int i = 0; i < size; i++) {
     image >> x;
     this->matrix.push_back(x);
   }
+
   this->undo_matrix = this->matrix;
   this->undo_width = this->width;
   this->undo_height = this->height;
