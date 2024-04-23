@@ -8,11 +8,8 @@ int main() {
   PBM_Image image2(
       "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test2.pbm");
 
-  std::cout << image;
-  image.rotate("left");
-  std::cout << image;
-  image.undo();
-  std::cout << image;
+  std::cout << image << image2;
+  image.collage("horizontal", image2);
   image.undo();
   std::cout << image;
   return 0;

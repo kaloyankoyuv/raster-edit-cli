@@ -19,4 +19,9 @@ public:
   virtual bool save() const = 0;
   virtual bool save_as(const std::string &) const = 0;
   virtual bool undo() = 0;
+
+  virtual bool grayscale() = 0;
+  virtual bool monochrome() = 0;
+  virtual bool negative() = 0;
+  virtual bool rotate(const std::string &) = 0;
 };

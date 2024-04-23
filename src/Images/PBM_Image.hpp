@@ -16,8 +16,11 @@ public:
   bool save_as(const std::string &) const;
   bool undo();
 
+  bool grayscale();
+  bool monochrome();
   bool negative();
   bool rotate(const std::string &);
+  bool collage(const std::string &, const PBM_Image &);
 
   friend std::ostream &operator<<(std::ostream &, const PBM_Image &);
 };

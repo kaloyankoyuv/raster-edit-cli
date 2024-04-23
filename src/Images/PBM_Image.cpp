@@ -57,6 +57,16 @@ bool PBM_Image::undo() {
   return true;
 }
 
+bool PBM_Image::grayscale() {
+  std::cout << "Grayscale operation not supported" << std::endl;
+  return true;
+}
+
+bool PBM_Image::monochrome() {
+  std::cout << "Monochrome operation not supported" << std::endl;
+  return true;
+}
+
 bool PBM_Image::negative() {
   this->undo_matrix = this->matrix;
   this->undo_width = this->width;
@@ -79,4 +89,20 @@ bool PBM_Image::rotate(const std::string &direction) {
   this->undo_height = this->height;
   rotate_matrix(this->matrix, this->width, this->height, direction);
   return true;
+}
+
+bool PBM_Image::collage(const std::string &direction, const PBM_Image &other) {
+  this->undo_matrix = this->matrix;
+  this->undo_width = this->width;
+  this->undo_height = this->height;
+  if (direction == "vertical") {
+    cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
+                 other.width, other.height);
+    return true;
+  } else if (direction == "horizontal") {
+    cat_h_matrix(this->matrix, this->width, this->height, other.matrix,
+                 other.width, other.height);
+    return true;
+  }
+  return false;
 }

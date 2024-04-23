@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <vector>
 
@@ -45,5 +46,38 @@ void rotate_matrix(std::vector<T> &v, int &w, int &h,
     flip_h_matrix(v, w, h);
   } else if (direction == "right") {
     flip_v_matrix(v, w, h);
+  }
+}
+
+template <typename T>
+void cat_v_matrix(std::vector<T> &v1, int &w1, int &h1,
+                  const std::vector<T> &v2, int w2, int h2) {
+
+  if (w1 != w2) {
+    std::cout << "Width1 != Width2" << std::endl;
+    return;
+  }
+
+  int size = w2 * h2;
+  for (int i = 0; i < size; i++) {
+    v1.push_back(v2[i]);
+  }
+  h1 += h2;
+}
+
+template <typename T>
+void cat_h_matrix(std::vector<T> &v1, int &w1, int &h1,
+                  const std::vector<T> &v2, int w2, int h2) {
+
+  if (h1 != h2) {
+    std::cout << "Height1 != Height2" << std::endl;
+    return;
+  }
+
+  w1 += w2;
+
+  for (int i = 0; i < h1; i++) {
+    typename std::vector<T>::iterator pos = v1.begin() + ((i + 1) * w1) - w2;
+    v1.insert(pos, v2.begin() + (i * w2), v2.begin() + ((i + 1) * w2));
   }
 }
