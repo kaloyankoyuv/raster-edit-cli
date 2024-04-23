@@ -74,10 +74,23 @@ void cat_h_matrix(std::vector<T> &v1, int &w1, int &h1,
     return;
   }
 
-  w1 += w2;
-
+  int k = 0;
+  int l = 0;
+  std::vector<T> result;
   for (int i = 0; i < h1; i++) {
-    typename std::vector<T>::iterator pos = v1.begin() + ((i + 1) * w1) - w2;
-    v1.insert(pos, v2.begin() + (i * w2), v2.begin() + ((i + 1) * w2));
+    for (int j = 0; j < w1; j++) {
+      T x = v1[k];
+      result.push_back(x);
+      k++;
+    }
+    for (int j = 0; j < w2; j++) {
+      T y = v2[l];
+      result.push_back(y);
+      l++;
+    }
   }
+
+  v1 = result;
+
+  w1 += w2;
 }

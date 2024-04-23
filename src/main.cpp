@@ -3,14 +3,13 @@
 
 int main() {
 
-  PBM_Image image(
-      "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test.pbm");
-  PBM_Image image2(
-      "/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/test2.pbm");
+  PBM_Image image("/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/"
+                  "sample_1280×853-plain.pbm");
+  PBM_Image image2("/home/kkoyuv/Documents/projects/raster-edit-cli/"
+                   "demo-images/sample_640×426.pbm");
 
-  std::cout << image << image2;
-  image.collage("horizontal", image2);
-  image.undo();
-  std::cout << image;
+  image.collage("horizontal", image);
+  image.save();
+
   return 0;
 }
