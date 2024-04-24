@@ -22,7 +22,5 @@ public:
   bool rotate(const std::string &);
   bool collage(const std::string &, const PBM_Image &);
 
-  friend std::ostream &operator<<(std::ostream &, const PBM_Image &);
+  void out(std::ostream &) const;
 };
-
-std::ostream &operator<<(std::ostream &, const PBM_Image &);

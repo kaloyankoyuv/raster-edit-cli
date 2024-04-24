@@ -22,23 +22,21 @@ PBM_Image::PBM_Image(const std::string &_file_name) {
   image.close();
 }
 
-std::ostream &operator<<(std::ostream &out, const PBM_Image &img) {
-  out << img.type << "\n" << img.width << " " << img.height << "\n";
-  int size = img.width * img.height;
+void PBM_Image::out(std::ostream &out) const {
+  out << this->type << "\n" << this->width << " " << this->height << "\n";
+  int size = this->width * this->height;
   for (int i = 0; i < size; i++) {
-    if (i % img.width == img.width - 1) {
-      out << img.matrix[i] << "\n";
+    if (i % this->width == this->width - 1) {
+      out << this->matrix[i] << "\n";
     } else {
-      out << img.matrix[i] << " ";
+      out << this->matrix[i] << " ";
     }
   }
-
-  return out;
 }
 
 bool PBM_Image::save() const {
   std::ofstream out_image(this->file_name);
-  out_image << *this;
+  out_image << this;
   out_image.close();
 
   return true;
@@ -47,7 +45,7 @@ bool PBM_Image::save() const {
 bool PBM_Image::save_as(const std::string &new_file_name) const {
 
   std::ofstream out_image(new_file_name);
-  out_image << *this;
+  out_image << this;
   out_image.close();
 
   return true;

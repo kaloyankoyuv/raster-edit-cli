@@ -22,4 +22,8 @@ public:
   virtual bool monochrome() = 0;
   virtual bool negative() = 0;
   virtual bool rotate(const std::string &) = 0;
+
+  virtual void out(std::ostream &) const = 0;
 };
+
+std::ostream &operator<<(std::ostream &, const Image *);
