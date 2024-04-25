@@ -1,15 +1,15 @@
 #include "Session.hpp"
 #include <iostream>
 
-Session::Session(Image &img, int _id) {
-  this->images.push_back(&img);
+Session::Session(Image *img, int _id) {
+  this->images.push_back(img);
   this->id = _id;
 }
 
 int Session::get_id() { return this->id; }
 
-bool Session::add_image(Image &img) {
-  this->images.push_back(&img);
+bool Session::add_image(Image *img) {
+  this->images.push_back(img);
   return true;
 }
 
@@ -38,5 +38,39 @@ bool Session::undo() {
     return false;
   }
   this->operations.pop_back();
+  return true;
+}
+
+bool Session::apply() {
+  for (std::string s : this->operations) {
+    if (s == "rotate left") {
+      for (Image *img : this->images) {
+        img->rotate("left");
+      }
+    } else if (s == "rotate right") {
+      for (Image *img : this->images) {
+        img->rotate("right");
+      }
+    } else if (s == "grayscale") {
+      for (Image *img : this->images) {
+        img->grayscale();
+      }
+    } else if (s == "negative") {
+      for (Image *img : this->images) {
+        img->negative();
+      }
+    } else if (s == "monochrome") {
+      for (Image *img : this->images) {
+        img->monochrome();
+      }
+    }
+  }
+  return true;
+}
+
+bool Session::save() {
+  for (Image *img : this->images) {
+    img->save();
+  }
   return true;
 }
