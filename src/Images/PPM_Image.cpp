@@ -1,8 +1,8 @@
-#include "PGM_Image.hpp"
+#include "PPM_Image.hpp"
 #include <fstream>
 #include <iostream>
 
-PGM_Image::PGM_Image(const std::string &_file_name) {
+PPM_Image::PPM_Image(const std::string &_file_name) {
 
   std::ifstream image(_file_name);
 
@@ -10,44 +10,48 @@ PGM_Image::PGM_Image(const std::string &_file_name) {
   image >> this->type >> this->width >> this->height >> this->max_value;
 
   int size = this->width * this->height;
-  int x;
+  int x, y, z;
   Pixel p;
   for (int i = 0; i < size; i++) {
     image >> x;
+    image >> y;
+    image >> z;
     p.r = x;
-    p.g = x;
-    p.b = x;
+    p.g = y;
+    p.b = z;
     this->matrix.push_back(p);
   }
   image.close();
 }
 
-void PGM_Image::out(std::ostream &out) const {
+void PPM_Image::out(std::ostream &out) const {
   out << this->type << "\n"
       << this->width << " " << this->height << "\n"
       << this->max_value << "\n";
   int size = this->width * this->height;
-  int k = 0;
+  int k = 1;
   for (int i = 0; i < size; i++) {
-    if (k % 15 == 0) {
+    if (k % 5 == 0) {
       out << "\n";
+      k = 0;
     }
-    out << this->matrix[i].r << " ";
+    out << this->matrix[i].r << " " << this->matrix[i].g << " "
+        << this->matrix[i].b << " ";
     k++;
   }
 }
 
-bool PGM_Image::grayscale() {
+bool PPM_Image::grayscale() {
   std::cout << "Grayscale operation not supported" << std::endl;
   return true;
 }
 
-bool PGM_Image::monochrome() {
+bool PPM_Image::monochrome() {
   std::cout << "Monochrome operation not supported" << std::endl;
   return true;
 }
 
-bool PGM_Image::negative() {
+bool PPM_Image::negative() {
   int size = this->width * this->height;
   for (int i = 0; i < size; i++) {
     this->matrix[i].r = this->max_value - this->matrix[i].r;
