@@ -1,5 +1,10 @@
 #pragma once
 #include <string>
+#include <vector>
+
+struct Pixel {
+  int r, g, b;
+};
 
 class Image {
 protected:
@@ -7,6 +12,7 @@ protected:
   std::string type;
   int width;
   int height;
+  std::vector<Pixel> matrix;
 
 public:
   std::string get_file_name() const;
@@ -14,16 +20,14 @@ public:
   int get_width() const;
   int get_height() const;
 
-  virtual bool save() const = 0;
-  virtual bool save_as(const std::string &) const = 0;
-  virtual bool undo() = 0;
+  bool save() const;
+  bool save_as(const std::string &) const;
 
   virtual bool grayscale() = 0;
   virtual bool monochrome() = 0;
   virtual bool negative() = 0;
-  virtual bool rotate(const std::string &) = 0;
+  bool rotate(const std::string &);
+  bool collage(const std::string &, const Image &);
 
   virtual void out(std::ostream &) const = 0;
 };
-
-std::ostream &operator<<(std::ostream &, const Image *);
