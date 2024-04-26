@@ -36,7 +36,7 @@ void PBM_Image::out(std::ostream &out) const {
 
 bool PBM_Image::save() const {
   std::ofstream out_image(this->file_name);
-  out_image << this;
+  this->out(out_image);
   out_image.close();
 
   return true;
@@ -45,7 +45,7 @@ bool PBM_Image::save() const {
 bool PBM_Image::save_as(const std::string &new_file_name) const {
 
   std::ofstream out_image(new_file_name);
-  out_image << this;
+  this->out(out_image);
   out_image.close();
 
   return true;
