@@ -43,7 +43,22 @@ bool PGM_Image::grayscale() {
 }
 
 bool PGM_Image::monochrome() {
-  std::cout << "Monochrome operation not supported" << std::endl;
+
+  int x = this->max_value / 2;
+  int size = this->width * this->height;
+  for (int i = 0; i < size; i++) {
+    if (matrix[i].r > x) {
+      matrix[i].r = 1;
+      matrix[i].g = 1;
+      matrix[i].b = 1;
+    } else {
+      matrix[i].r = 0;
+      matrix[i].g = 0;
+      matrix[i].b = 0;
+    }
+  }
+
+  this->max_value = 1;
   return true;
 }
 
