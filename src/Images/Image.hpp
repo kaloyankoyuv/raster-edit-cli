@@ -15,6 +15,8 @@ protected:
   std::vector<Pixel> matrix;
 
 public:
+  virtual ~Image() = default;
+
   std::string get_file_name() const;
   std::string get_type() const;
   int get_width() const;

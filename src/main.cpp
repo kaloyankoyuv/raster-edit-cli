@@ -1,21 +1,67 @@
-#include "Images/PBM_Image.hpp"
-#include "Images/PGM_Image.hpp"
-#include "Images/PPM_Image.hpp"
 #include "Session/Session.hpp"
 #include <iostream>
 
 int main() {
 
-  PBM_Image image("/home/kkoyuv/Documents/projects/raster-edit-cli/demo-images/"
-                  "test3.pbm");
-  PBM_Image image2("/home/kkoyuv/Documents/projects/raster-edit-cli/"
-                   "demo-images/test3.pbm");
+  int id_num = -1;
+  int curr_session_id = id_num;
+  std::vector<Session *> sessions;
+  std::string input;
+  while (true) {
+    std::cin >> input;
+    if (input == "load") {
+      std::cin >> input;
+      sessions.push_back(new Session(input, ++id_num));
+      curr_session_id = id_num;
+    } else if (input == "add") {
+      std::cin >> input;
+      if (curr_session_id != -1) {
+        sessions[curr_session_id]->add_image(input);
+      }
+    } else if (input == "switch") {
+      int x;
+      std::cin >> x;
+      if (x >= 0 && x <= id_num) {
+        curr_session_id = x;
+      }
+    } else if (input == "undo") {
+      sessions[curr_session_id]->undo();
+    } else if (input == "session") {
+      std::cin >> input;
+      if (input == "info") {
+        sessions[curr_session_id]->info();
+      }
+    } else if (input == "exit") {
+      std::cout << "Exiting!" << std::endl;
+      break;
+    } else if (input == "help") {
+      std::cout << "RTFM" << std::endl;
+    } else if (input == "apply") {
+      sessions[curr_session_id]->apply();
+    } else if (input == "save") {
+      sessions[curr_session_id]->save();
+    } else if (input == "saveas") {
+      std::cin >> input;
+      sessions[curr_session_id]->saveas(input);
+    } else if (input == "monochrome") {
+      sessions[curr_session_id]->add_operation(input);
+    } else if (input == "grayscale") {
+      sessions[curr_session_id]->add_operation(input);
+    } else if (input == "negative") {
+      sessions[curr_session_id]->add_operation(input);
+    } else if (input == "rotate") {
+      std::cin >> input;
+      if (input == "left") {
+        sessions[curr_session_id]->add_operation("rotate left");
+      } else if (input == "right") {
+        sessions[curr_session_id]->add_operation("rotate right");
+      }
+    }
+  }
 
-  PGM_Image image3("/home/kkoyuv/Downloads/apollonian_gasket.ascii.pgm");
-  PPM_Image image4("/home/kkoyuv/Downloads/test.ppm");
-
-  image4.collage("horizontal", image4);
-  image4.save();
+  for (Session *s : sessions) {
+    delete s;
+  }
 
   return 0;
 }

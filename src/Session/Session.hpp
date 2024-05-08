@@ -10,14 +10,16 @@ private:
   int id;
 
 public:
-  Session(Image *, int);
+  Session(const std::string &, int);
+  ~Session();
 
   int get_id();
 
-  bool add_image(Image *);
+  bool add_image(const std::string &);
   bool add_operation(const std::string &);
   bool info() const;
   bool undo();
   bool apply();
   bool save();
+  bool saveas(const std::string &);
 };
