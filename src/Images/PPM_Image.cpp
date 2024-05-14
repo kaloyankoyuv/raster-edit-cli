@@ -42,12 +42,33 @@ void PPM_Image::out(std::ostream &out) const {
 }
 
 bool PPM_Image::grayscale() {
-  std::cout << "Grayscale operation not supported" << std::endl;
+  int size = this->width * this->height;
+  int x;
+  for (int i = 0; i < size; i++) {
+    x = (this->matrix[i].r + this->matrix[i].g + this->matrix[i].b) / 3;
+    this->matrix[i].r = x;
+    this->matrix[i].g = x;
+    this->matrix[i].b = x;
+  }
   return true;
 }
 
 bool PPM_Image::monochrome() {
-  std::cout << "Monochrome operation not supported" << std::endl;
+  int size = this->width * this->height;
+  int threshold = this->max_value / 2;
+  int x;
+  for (int i = 0; i < size; i++) {
+    x = (this->matrix[i].r + this->matrix[i].g + this->matrix[i].b) / 3;
+    if (x > threshold) {
+      this->matrix[i].r = this->max_value;
+      this->matrix[i].g = this->max_value;
+      this->matrix[i].b = this->max_value;
+    } else {
+      this->matrix[i].r = 0;
+      this->matrix[i].g = 0;
+      this->matrix[i].b = 0;
+    }
+  }
   return true;
 }
 
