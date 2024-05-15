@@ -38,6 +38,7 @@ int main() {
       std::cout << "RTFM" << std::endl;
     } else if (input == "apply") {
       sessions[curr_session_id]->apply();
+      std::cout << "finished" << std::endl;
     } else if (input == "save") {
       sessions[curr_session_id]->save();
     } else if (input == "saveas") {
@@ -56,6 +57,16 @@ int main() {
       } else if (input == "right") {
         sessions[curr_session_id]->add_operation("rotate right");
       }
+    } else if (input == "collage") {
+      std::string direction;
+      std::cin >> direction;
+      std::string img1;
+      std::cin >> img1;
+      std::string img2;
+      std::cin >> img2;
+      std::string outimage;
+      std::cin >> outimage;
+      sessions[curr_session_id]->collage(direction, img1, img2, outimage);
     }
   }
 
