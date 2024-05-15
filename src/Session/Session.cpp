@@ -1,7 +1,4 @@
 #include "Session.hpp"
-#include "../Images/PBM_Image.hpp"
-#include "../Images/PGM_Image.hpp"
-#include "../Images/PPM_Image.hpp"
 #include <iostream>
 
 Session::Session(const std::string &img_path, int _id) {
@@ -19,15 +16,7 @@ int Session::get_id() { return this->id; }
 
 bool Session::add_image(const std::string &img_path) {
 
-  Image *img;
-  if (img_path.find(".pbm") != std::string::npos) {
-    img = new PBM_Image(img_path);
-  } else if (img_path.find(".pgm") != std::string::npos) {
-    img = new PGM_Image(img_path);
-  } else if (img_path.find(".ppm") != std::string::npos) {
-    img = new PPM_Image(img_path);
-  }
-
+  Image *img = Image::imageFactory(img_path);
   this->images.push_back(img);
   return true;
 }
@@ -98,6 +87,19 @@ bool Session::save() {
 bool Session::saveas(const std::string &img_path) {
 
   this->images[0]->save_as(img_path);
+
+  return true;
+}
+
+bool Session::collage(const std::string &direction,
+                      const std::string &img1_path,
+                      const std::string &img2_path,
+                      const std::string &outimage_path) {
+
+  Image *img1 = Image::imageFactory(img1_path);
+  img1->collage(direction, img2_path);
+  img1->save_as(outimage_path);
+  this->images.push_back(img1);
 
   return true;
 }

@@ -1,6 +1,11 @@
 #include "Image.hpp"
-#include "../MatrixAlgorithms/matrix_algorithms.hpp"
+#include "PBM_Image.hpp"
+#include "PGM_Image.hpp"
+#include "PPM_Image.hpp"
+#include <algorithm>
 #include <fstream>
+#include <iostream>
+#include <string>
 
 std::string Image::get_file_name() const { return this->file_name; }
 
@@ -19,31 +24,33 @@ bool Image::save() const {
   return true;
 }
 
-bool Image::save_as(const std::string &new_file_name) const {
+bool Image::save_as(const std::string &new_file_name) {
 
   std::ofstream out_image(new_file_name);
   this->out(out_image);
+  this->file_name = new_file_name;
   out_image.close();
 
   return true;
 }
 
-bool Image::rotate(const std::string &direction) {
-
-  rotate_matrix(this->matrix, this->width, this->height, direction);
-  return true;
-}
-
-bool Image::collage(const std::string &direction, const Image &other) {
-
-  if (direction == "vertical") {
-    cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
-                 other.width, other.height);
-    return true;
-  } else if (direction == "horizontal") {
-    cat_h_matrix(this->matrix, this->width, this->height, other.matrix,
-                 other.width, other.height);
-    return true;
+Image *Image::imageFactory(const std::string &img_path) {
+  std::string extension;
+  int i = img_path.length() - 1;
+  while (img_path[i] != '.') {
+    extension.push_back(img_path[i]);
+    i--;
   }
-  return false;
+  reverse(extension.begin(), extension.end());
+
+  if (extension == "pbm") {
+    return new PBM_Image(img_path);
+  } else if (extension == "pgm") {
+    return new PGM_Image(img_path);
+  } else if (extension == "ppm") {
+    return new PPM_Image(img_path);
+  } else {
+    std::cout << "Invalid image";
+  }
+  return nullptr;
 }

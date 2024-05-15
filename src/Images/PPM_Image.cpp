@@ -1,4 +1,5 @@
 #include "PPM_Image.hpp"
+#include "../MatrixAlgorithms/matrix_algorithms.hpp"
 #include <fstream>
 #include <iostream>
 
@@ -33,7 +34,7 @@ void PPM_Image::out(std::ostream &out) const {
   for (int i = 0; i < size; i++) {
     if (k % 5 == 0) {
       out << "\n";
-      k = 0;
+      k = 1;
     }
     out << this->matrix[i].r << " " << this->matrix[i].g << " "
         << this->matrix[i].b << " ";
@@ -80,4 +81,26 @@ bool PPM_Image::negative() {
     this->matrix[i].b = this->max_value - this->matrix[i].b;
   }
   return true;
+}
+
+bool PPM_Image::rotate(const std::string &direction) {
+
+  rotate_matrix(this->matrix, this->width, this->height, direction);
+  return true;
+}
+
+bool PPM_Image::collage(const std::string &direction, const std::string &img) {
+
+  PPM_Image other(img);
+
+  if (direction == "vertical") {
+    cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
+                 other.width, other.height);
+    return true;
+  } else if (direction == "horizontal") {
+    cat_h_matrix(this->matrix, this->width, this->height, other.matrix,
+                 other.width, other.height);
+    return true;
+  }
+  return false;
 }

@@ -1,10 +1,5 @@
 #pragma once
 #include <string>
-#include <vector>
-
-struct Pixel {
-  int r, g, b;
-};
 
 class Image {
 protected:
@@ -12,7 +7,6 @@ protected:
   std::string type;
   int width;
   int height;
-  std::vector<Pixel> matrix;
 
 public:
   virtual ~Image() = default;
@@ -23,13 +17,15 @@ public:
   int get_height() const;
 
   bool save() const;
-  bool save_as(const std::string &) const;
+  bool save_as(const std::string &);
 
   virtual bool grayscale() = 0;
   virtual bool monochrome() = 0;
   virtual bool negative() = 0;
-  bool rotate(const std::string &);
-  bool collage(const std::string &, const Image &);
+  virtual bool rotate(const std::string &) = 0;
+  virtual bool collage(const std::string &, const std::string &) = 0;
 
   virtual void out(std::ostream &) const = 0;
+
+  static Image *imageFactory(const std::string &);
 };
