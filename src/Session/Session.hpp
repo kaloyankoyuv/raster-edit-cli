@@ -22,4 +22,6 @@ public:
   bool apply();
   bool save();
   bool saveas(const std::string &);
+  bool collage(const std::string &, const std::string &, const std::string &,
+               const std::string &);
 };
