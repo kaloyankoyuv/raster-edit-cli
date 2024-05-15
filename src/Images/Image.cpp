@@ -14,6 +14,7 @@ bool Image::save() const {
 
   std::ofstream out_image(this->file_name);
   this->out(out_image);
+  out_image.close();
 
   return true;
 }
