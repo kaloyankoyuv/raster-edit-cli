@@ -103,3 +103,13 @@ bool Session::collage(const std::string &direction,
 
   return true;
 }
+
+bool Session::scale(int factor, const std::string &img_path,
+                    const std::string &outimage_path) {
+  Image *img = Image::imageFactory(img_path);
+  img->scale(factor);
+  img->save_as(outimage_path);
+  this->images.push_back(img);
+
+  return true;
+}

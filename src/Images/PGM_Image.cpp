@@ -81,3 +81,8 @@ bool PGM_Image::collage(const std::string &direction, const std::string &img) {
   }
   return false;
 }
+
+bool PGM_Image::scale(int factor) {
+  scale_matrix(this->matrix, this->width, this->height, factor);
+  return true;
+}

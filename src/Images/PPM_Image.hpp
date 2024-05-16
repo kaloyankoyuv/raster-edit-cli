@@ -19,6 +19,7 @@ public:
   bool negative();
   bool rotate(const std::string &);
   bool collage(const std::string &, const std::string &);
+  bool scale(int factor);
 
   void out(std::ostream &) const;
 };

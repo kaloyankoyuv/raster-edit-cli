@@ -38,7 +38,7 @@ int main() {
       std::cout << "RTFM" << std::endl;
     } else if (input == "apply") {
       sessions[curr_session_id]->apply();
-      std::cout << "finished" << std::endl;
+      std::cout << "done" << std::endl;
     } else if (input == "save") {
       sessions[curr_session_id]->save();
     } else if (input == "saveas") {
@@ -67,6 +67,16 @@ int main() {
       std::string outimage;
       std::cin >> outimage;
       sessions[curr_session_id]->collage(direction, img1, img2, outimage);
+      std::cout << "done" << std::endl;
+    } else if (input == "scale") {
+      int factor;
+      std::cin >> factor;
+      std::string img;
+      std::cin >> img;
+      std::string out;
+      std::cin >> out;
+      sessions[curr_session_id]->scale(factor, img, out);
+      std::cout << "done" << std::endl;
     }
   }
 

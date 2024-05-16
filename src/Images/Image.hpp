@@ -24,6 +24,7 @@ public:
   virtual bool negative() = 0;
   virtual bool rotate(const std::string &) = 0;
   virtual bool collage(const std::string &, const std::string &) = 0;
+  virtual bool scale(int) = 0;
 
   virtual void out(std::ostream &) const = 0;
 

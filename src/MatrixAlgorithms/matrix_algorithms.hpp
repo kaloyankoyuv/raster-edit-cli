@@ -94,3 +94,30 @@ void cat_h_matrix(std::vector<T> &v1, int &w1, int &h1,
 
   w1 += w2;
 }
+
+template <typename T>
+void scale_matrix(std::vector<T> &m, int &w, int &h, int factor) {
+
+  while (factor--) {
+    std::vector<T> new_m(w * h * 4);
+
+    int row = 0;
+    int col = 0;
+
+    for (int i = 0; i < w * h; i++) {
+      new_m[row * (w * 2) + col] = m[i];
+      new_m[row * (w * 2) + col + 1] = m[i];
+      new_m[(row + 1) * (w * 2) + col] = m[i];
+      new_m[(row + 1) * (w * 2) + col + 1] = m[i];
+      col += 2;
+      if (col >= w * 2) {
+        row += 2;
+        col = 0;
+      }
+    }
+
+    w *= 2;
+    h *= 2;
+    m = new_m;
+  }
+}

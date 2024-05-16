@@ -71,3 +71,9 @@ bool PBM_Image::collage(const std::string &direction,
   }
   return false;
 }
+
+bool PBM_Image::scale(int factor) {
+
+  scale_matrix(this->matrix, this->width, this->height, factor);
+  return true;
+}
