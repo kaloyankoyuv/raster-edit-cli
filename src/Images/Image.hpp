@@ -8,6 +8,11 @@ protected:
   int width;
   int height;
 
+  virtual void read(const std::string &) = 0;
+  virtual void write(const std::string &) const = 0;
+
+  void skip_comments(std::ifstream &);
+
 public:
   virtual ~Image() = default;
 
@@ -16,17 +21,15 @@ public:
   int get_width() const;
   int get_height() const;
 
-  bool save() const;
-  bool save_as(const std::string &);
+  void save() const;
+  void save_as(const std::string &);
 
-  virtual bool grayscale() = 0;
-  virtual bool monochrome() = 0;
-  virtual bool negative() = 0;
-  virtual bool rotate(const std::string &) = 0;
-  virtual bool collage(const std::string &, const std::string &) = 0;
-  virtual bool scale(int) = 0;
-
-  virtual void out(std::ostream &) const = 0;
+  virtual void grayscale() = 0;
+  virtual void monochrome() = 0;
+  virtual void negative() = 0;
+  virtual void rotate(const std::string &) = 0;
+  virtual void collage(const std::string &, const std::string &) = 0;
+  virtual void scale(int) = 0;
 
   static Image *imageFactory(const std::string &);
 };

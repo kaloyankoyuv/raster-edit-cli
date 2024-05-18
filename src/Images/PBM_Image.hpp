@@ -6,15 +6,16 @@ class PBM_Image : public Image {
 private:
   std::vector<bool> matrix;
 
+  void read(const std::string &);
+  void write(const std::string &) const;
+
 public:
   PBM_Image(const std::string &);
 
-  bool grayscale();
-  bool monochrome();
-  bool negative();
-  bool rotate(const std::string &);
-  bool collage(const std::string &, const std::string &);
-  bool scale(int factor);
-
-  void out(std::ostream &) const;
+  void grayscale();
+  void monochrome();
+  void negative();
+  void rotate(const std::string &);
+  void collage(const std::string &, const std::string &);
+  void scale(int);
 };

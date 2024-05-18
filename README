@@ -2,6 +2,6 @@ Simple raster image editor with command-line interface.
 
 TODO:
   - Finish memory management in class Session
-  - Finish all the operations for images (grayscale, monochrome, scale)
   - Finish the logic of the program
   - Write tests
+  - Finish binary read and write for PGM images

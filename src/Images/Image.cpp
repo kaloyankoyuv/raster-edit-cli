@@ -15,23 +15,11 @@ int Image::get_width() const { return this->width; }
 
 int Image::get_height() const { return this->height; }
 
-bool Image::save() const {
+void Image::save() const { this->write(this->file_name); }
 
-  std::ofstream out_image(this->file_name);
-  this->out(out_image);
-  out_image.close();
-
-  return true;
-}
-
-bool Image::save_as(const std::string &new_file_name) {
-
-  std::ofstream out_image(new_file_name);
-  this->out(out_image);
+void Image::save_as(const std::string &new_file_name) {
+  this->write(new_file_name);
   this->file_name = new_file_name;
-  out_image.close();
-
-  return true;
 }
 
 Image *Image::imageFactory(const std::string &img_path) {
@@ -53,4 +41,11 @@ Image *Image::imageFactory(const std::string &img_path) {
     std::cout << "Invalid image";
   }
   return nullptr;
+}
+
+void Image::skip_comments(std::ifstream &image) {
+  std::string line;
+  while (image >> std::ws && image.peek() == '#') {
+    std::getline(image, line);
+  }
 }
