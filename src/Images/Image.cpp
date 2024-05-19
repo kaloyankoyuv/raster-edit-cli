@@ -23,13 +23,8 @@ void Image::save_as(const std::string &new_file_name) {
 }
 
 Image *Image::imageFactory(const std::string &img_path) {
-  std::string extension;
-  int i = img_path.length() - 1;
-  while (img_path[i] != '.') {
-    extension.push_back(img_path[i]);
-    i--;
-  }
-  reverse(extension.begin(), extension.end());
+
+  std::string extension = Image::extract_extension(img_path);
 
   if (extension == "pbm") {
     return new PBM_Image(img_path);
@@ -48,4 +43,15 @@ void Image::skip_comments(std::ifstream &image) {
   while (image >> std::ws && image.peek() == '#') {
     std::getline(image, line);
   }
+}
+
+std::string Image::extract_extension(const std::string &img_path) {
+  std::string extension;
+  int i = img_path.length() - 1;
+  while (img_path[i] != '.') {
+    extension.push_back(img_path[i]);
+    i--;
+  }
+  reverse(extension.begin(), extension.end());
+  return extension;
 }

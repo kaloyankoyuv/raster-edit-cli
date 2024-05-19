@@ -12,6 +12,7 @@ protected:
   virtual void write(const std::string &) const = 0;
 
   void skip_comments(std::ifstream &);
+  static std::string extract_extension(const std::string &);
 
 public:
   virtual ~Image() = default;

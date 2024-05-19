@@ -25,14 +25,14 @@ void PBM_Image::read(const std::string &_file_name) {
   } else if (this->type == "P4") {
     image.ignore(1);
     unsigned char c;
-    for (int i = 0; i < this->width * this->height; i++) {
+    for (int i = 0; i < this->width * this->height / 8; i++) {
       image.read(reinterpret_cast<char *>(&c), 1);
       int value = static_cast<int>(c);
 
       std::bitset<8> bits(value);
 
       for (int i = 7; i >= 0; --i) {
-        this->matrix.push_back(bits[i]);
+        this->matrix.push_back(static_cast<bool>(bits[i]));
       }
     }
   }
@@ -53,12 +53,16 @@ void PBM_Image::write(const std::string &outfile_name) const {
       k++;
     }
   } else if (this->type == "P4") {
-    for (int i = 0; i < this->width * this->height; i += 8) {
-      int value = 0;
-      for (int k = 0; k < 8; k++) {
-        value += this->matrix[i + k] * std::pow(2, 7 - k);
+    for (int i = 0; i < this->height; ++i) {
+      for (int j = 0; j < this->width; j += 8) {
+        unsigned char value = 0;
+        for (int k = 0; k < 8; ++k) {
+          if (j + k < this->width) {
+            value |= (this->matrix[i * this->width + j + k] << (7 - k));
+          }
+        }
+        out.put(static_cast<unsigned char>(value));
       }
-      out.put((unsigned char)(value));
     }
   }
   out.close();
