@@ -9,13 +9,27 @@ void PGM_Image::read(const std::string &file_name) {
   std::ifstream image(file_name);
 
   this->file_name = file_name;
-  image >> this->type >> this->width >> this->height >> this->max_value;
+  image >> this->type;
+  this->skip_comments(image);
+  image >> this->width >> this->height;
+  this->skip_comments(image);
+  image >> this->max_value;
 
-  int size = this->width * this->height;
   int x;
-  for (int i = 0; i < size; i++) {
-    image >> x;
-    this->matrix.push_back(x);
+  if (this->type == "P2") {
+    for (int i = 0; i < this->width * this->height; i++) {
+      this->skip_comments(image);
+      image >> x;
+      this->matrix.push_back(x);
+    }
+  } else if (this->type == "P5") {
+    image.ignore(1);
+    unsigned char c;
+    for (int i = 0; i < this->width * this->height; i++) {
+      image.read(reinterpret_cast<char *>(&c), 1);
+      x = static_cast<int>(c);
+      this->matrix.push_back(x);
+    }
   }
   image.close();
 }
@@ -25,15 +39,20 @@ void PGM_Image::write(const std::string &outimage_name) const {
   out << this->type << "\n"
       << this->width << " " << this->height << "\n"
       << this->max_value << "\n";
-  int size = this->width * this->height;
-  int k = 1;
-  for (int i = 0; i < size; i++) {
-    if (k % 15 == 0) {
-      out << "\n";
-      k = 1;
+  if (this->type == "P2") {
+    int k = 1;
+    for (int i = 0; i < this->width * this->height; i++) {
+      if (k % 15 == 0) {
+        out << "\n";
+        k = 1;
+      }
+      out << this->matrix[i] << " ";
+      k++;
     }
-    out << this->matrix[i] << " ";
-    k++;
+  } else if (this->type == "P5") {
+    for (int i = 0; i < this->width * this->height; i++) {
+      out.put(static_cast<unsigned char>(this->matrix[i]));
+    }
   }
   out.close();
 }
