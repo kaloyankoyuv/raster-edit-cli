@@ -33,7 +33,8 @@ Image *Image::imageFactory(const std::string &img_path) {
   } else if (extension == "ppm") {
     return new PPM_Image(img_path);
   } else {
-    std::cout << "Invalid image";
+    std::cout << "Can't create image, not a supported image format"
+              << std::endl;
   }
   return nullptr;
 }
