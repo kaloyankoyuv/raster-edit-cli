@@ -6,6 +6,9 @@
 PPM_Image::PPM_Image(const std::string &_file_name) { this->read(_file_name); }
 
 void PPM_Image::read(const std::string &_file_name) {
+  if (this->extract_extension(_file_name) != "ppm") {
+    std::cout << "Not a ppm image" << std::endl;
+  }
   std::ifstream image(_file_name);
 
   this->file_name = _file_name;

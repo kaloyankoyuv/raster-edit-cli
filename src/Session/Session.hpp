@@ -15,14 +15,14 @@ public:
 
   int get_id();
 
-  bool add_image(const std::string &);
-  bool add_operation(const std::string &);
-  bool info() const;
-  bool undo();
-  bool apply();
-  bool save();
-  bool saveas(const std::string &);
-  bool collage(const std::string &, const std::string &, const std::string &,
+  void add_image(const std::string &);
+  void add_operation(const std::string &);
+  void info() const;
+  void undo();
+  void apply();
+  void save();
+  void saveas(const std::string &);
+  void collage(const std::string &, const std::string &, const std::string &,
                const std::string &);
-  bool scale(int, const std::string &, const std::string &);
+  void scale(int, const std::string &, const std::string &);
 };

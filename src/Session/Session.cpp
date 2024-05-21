@@ -1,4 +1,5 @@
 #include "Session.hpp"
+#include "../Images/Image.hpp"
 #include <iostream>
 
 Session::Session(const std::string &img_path, int _id) {
@@ -14,19 +15,37 @@ Session::~Session() {
 
 int Session::get_id() { return this->id; }
 
-bool Session::add_image(const std::string &img_path) {
+void Session::add_image(const std::string &img_path) {
 
   Image *img = Image::imageFactory(img_path);
-  this->images.push_back(img);
-  return true;
+
+  if (img != nullptr) {
+    for (Image *image : this->images) {
+      if (img->get_file_name() == image->get_file_name()) {
+        std::cout << "Image already added to session" << std::endl;
+        return;
+      }
+    }
+    this->images.push_back(img);
+    std::cout << "Added image: " << img_path << std::endl;
+  } else {
+    std::cout << "Not a valid image" << std::endl;
+  }
 }
 
-bool Session::add_operation(const std::string &operation) {
-  this->operations.push_back(operation);
-  return true;
+void Session::add_operation(const std::string &operation) {
+
+  if (operation == "rotate left" || operation == "rotate right" ||
+      operation == "grayscale" || operation == "monochrome" ||
+      operation == " negative") {
+
+    this->operations.push_back(operation);
+  } else {
+    std::cout << "Not a valid operation" << std::endl;
+  }
 }
 
-bool Session::info() const {
+void Session::info() const {
   std::cout << "Session id: " << this->id << std::endl;
   std::cout << "Images: ";
   for (Image *img : this->images) {
@@ -38,18 +57,16 @@ bool Session::info() const {
     std::cout << s << " ";
   }
   std::cout << std::endl;
-  return true;
 }
 
-bool Session::undo() {
+void Session::undo() {
   if (this->operations.size() == 0) {
-    return false;
+    return;
   }
   this->operations.pop_back();
-  return true;
 }
 
-bool Session::apply() {
+void Session::apply() {
   for (std::string s : this->operations) {
     if (s == "rotate left") {
       for (Image *img : this->images) {
@@ -74,42 +91,43 @@ bool Session::apply() {
     }
   }
   this->operations.clear();
-  return true;
 }
 
-bool Session::save() {
+void Session::save() {
   for (Image *img : this->images) {
     img->save();
   }
-  return true;
 }
 
-bool Session::saveas(const std::string &img_path) {
-
+void Session::saveas(const std::string &img_path) {
   this->images[0]->save_as(img_path);
-
-  return true;
 }
 
-bool Session::collage(const std::string &direction,
+void Session::collage(const std::string &direction,
                       const std::string &img1_path,
                       const std::string &img2_path,
                       const std::string &outimage_path) {
 
-  Image *img1 = Image::imageFactory(img1_path);
-  img1->collage(direction, img2_path);
-  img1->save_as(outimage_path);
-  this->images.push_back(img1);
+  if (Image::extract_extension(img1_path) !=
+      Image::extract_extension(img2_path)) {
+    std::cout << "Cannot make collage from different image type" << std::endl;
+    return;
+  }
 
-  return true;
+  Image *img1 = Image::imageFactory(img1_path);
+  if (img1 != nullptr) {
+    img1->collage(direction, img2_path);
+    img1->save_as(outimage_path);
+    this->images.push_back(img1);
+  } else {
+    std::cout << "Not a valid image" << std::endl;
+  }
 }
 
-bool Session::scale(int factor, const std::string &img_path,
+void Session::scale(int factor, const std::string &img_path,
                     const std::string &outimage_path) {
   Image *img = Image::imageFactory(img_path);
   img->scale(factor);
   img->save_as(outimage_path);
   this->images.push_back(img);
-
-  return true;
 }

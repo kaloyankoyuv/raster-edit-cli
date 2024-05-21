@@ -25,7 +25,7 @@ int main() {
       if (curr_session_id != -1) {
         sessions[curr_session_id]->add_image(input);
       }
-      std::cout << "Added image: " << input << std::endl;
+
     } else if (input == "switch") {
       int x;
       std::cin >> x;

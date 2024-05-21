@@ -5,10 +5,16 @@
 
 PGM_Image::PGM_Image(const std::string &_file_name) { this->read(_file_name); }
 
-void PGM_Image::read(const std::string &file_name) {
-  std::ifstream image(file_name);
+void PGM_Image::read(const std::string &_file_name) {
 
-  this->file_name = file_name;
+  if (this->extract_extension(_file_name) != "pgm") {
+    std::cout << "Not a PGM Image" << std::endl;
+    return;
+  }
+
+  std::ifstream image(_file_name);
+
+  this->file_name = _file_name;
   image >> this->type;
   this->skip_comments(image);
   image >> this->width >> this->height;
