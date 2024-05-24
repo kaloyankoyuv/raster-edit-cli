@@ -56,10 +56,10 @@ void PBM_Image::write(const std::string &outfile_name) const {
       k++;
     }
   } else if (this->type == "P4") {
-    for (int i = 0; i < this->height; ++i) {
+    for (int i = 0; i < this->height; i++) {
       for (int j = 0; j < this->width; j += 8) {
         unsigned char value = 0;
-        for (int k = 0; k < 8; ++k) {
+        for (int k = 0; k < 8; k++) {
           if (j + k < this->width) {
             value |= (this->matrix[i * this->width + j + k] << (7 - k));
           }

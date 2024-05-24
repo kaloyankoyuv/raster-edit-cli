@@ -61,9 +61,11 @@ void Session::info() const {
 
 void Session::undo() {
   if (this->operations.size() == 0) {
+    std::cout << "No pending operations!" << std::endl;
     return;
   }
   this->operations.pop_back();
+  std::cout << "Undid last operation!" << std::endl;
 }
 
 void Session::apply() {

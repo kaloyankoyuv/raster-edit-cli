@@ -38,7 +38,7 @@ int main() {
       }
     } else if (input == "undo") {
       sessions[curr_session_id]->undo();
-      std::cout << "Undid last operation!" << std::endl;
+
     } else if (input == "session") {
       std::cin >> input;
       if (input == "info") {
