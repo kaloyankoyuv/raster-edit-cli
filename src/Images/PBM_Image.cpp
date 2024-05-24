@@ -8,7 +8,7 @@ PBM_Image::PBM_Image(const std::string &_file_name) { this->read(_file_name); }
 
 void PBM_Image::read(const std::string &_file_name) {
   if (Image::extract_extension(_file_name) != "pbm") {
-    std::cout << "Not a PBM image" << std::endl;
+    std::cout << _file_name << " is not a PBM image!" << std::endl;
     return;
   }
   std::ifstream image(_file_name);

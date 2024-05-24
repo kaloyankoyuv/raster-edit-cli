@@ -8,7 +8,7 @@ PGM_Image::PGM_Image(const std::string &_file_name) { this->read(_file_name); }
 void PGM_Image::read(const std::string &_file_name) {
 
   if (this->extract_extension(_file_name) != "pgm") {
-    std::cout << "Not a PGM Image" << std::endl;
+    std::cout << _file_name << "is not a PGM image!" << std::endl;
     return;
   }
 

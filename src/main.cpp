@@ -10,7 +10,7 @@ int main() {
   while (true) {
     std::cout << "Enter command > ";
     std::cin >> input;
-    if (input != "load" && id_num == -1) {
+    if ((input != "load" && input != "help") && id_num == -1) {
       std::cout << "No loaded session" << std::endl;
       continue;
     }
@@ -51,36 +51,23 @@ int main() {
       std::cout << "RTFM" << std::endl;
     } else if (input == "apply") {
       sessions[curr_session_id]->apply();
-      std::cout << "Applied operations!" << std::endl;
     } else if (input == "save") {
       sessions[curr_session_id]->save();
-      std::cout << "Saving images in current session!" << std::endl;
     } else if (input == "saveas") {
       std::cin >> input;
       sessions[curr_session_id]->saveas(input);
-      std::cout << "Saved first image in session as: " << input << std::endl;
     } else if (input == "monochrome") {
       sessions[curr_session_id]->add_operation(input);
-      std::cout << "Monochrome operation added to pending operations"
-                << std::endl;
     } else if (input == "grayscale") {
       sessions[curr_session_id]->add_operation(input);
-      std::cout << "Grayscale operation added to pending operations"
-                << std::endl;
     } else if (input == "negative") {
       sessions[curr_session_id]->add_operation(input);
-      std::cout << "Negative operation added to pending operations"
-                << std::endl;
     } else if (input == "rotate") {
       std::cin >> input;
       if (input == "left") {
         sessions[curr_session_id]->add_operation("rotate left");
-        std::cout << "Rotate left operation added to pending operations"
-                  << std::endl;
       } else if (input == "right") {
         sessions[curr_session_id]->add_operation("rotate right");
-        std::cout << "Rotate right operation added to pending operations"
-                  << std::endl;
       }
     } else if (input == "collage") {
       std::string direction;
@@ -92,8 +79,7 @@ int main() {
       std::string outimage;
       std::cin >> outimage;
       sessions[curr_session_id]->collage(direction, img1, img2, outimage);
-      std::cout << "Made collage from images: " << img1 << " and " << img2
-                << std::endl;
+
     } else if (input == "scale") {
       int factor;
       std::cin >> factor;
@@ -102,7 +88,6 @@ int main() {
       std::string out;
       std::cin >> out;
       sessions[curr_session_id]->scale(factor, img, out);
-      std::cout << "Scaled " << img << " by factor of " << factor << std::endl;
     }
   }
 

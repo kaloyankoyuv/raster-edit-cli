@@ -40,6 +40,8 @@ void Session::add_operation(const std::string &operation) {
       operation == " negative") {
 
     this->operations.push_back(operation);
+    std::cout << "Added operation: " << operation << std::endl;
+
   } else {
     std::cout << "Not a valid operation" << std::endl;
   }
@@ -93,16 +95,20 @@ void Session::apply() {
     }
   }
   this->operations.clear();
+  std::cout << "Applied pending operations!" << std::endl;
 }
 
 void Session::save() {
   for (Image *img : this->images) {
     img->save();
   }
+  std::cout << "Saved images in current session!" << std::endl;
 }
 
 void Session::saveas(const std::string &img_path) {
   this->images[0]->save_as(img_path);
+  std::cout << "Saved image: " << this->images[0] << " as: " << img_path
+            << std::endl;
 }
 
 void Session::collage(const std::string &direction,
@@ -112,7 +118,7 @@ void Session::collage(const std::string &direction,
 
   if (Image::extract_extension(img1_path) !=
       Image::extract_extension(img2_path)) {
-    std::cout << "Cannot make collage from different image type" << std::endl;
+    std::cout << "Cannot make collage from different image types!" << std::endl;
     return;
   }
 
@@ -121,15 +127,23 @@ void Session::collage(const std::string &direction,
     img1->collage(direction, img2_path);
     img1->save_as(outimage_path);
     this->images.push_back(img1);
+    std::cout << "Made collage from images: " << img1_path << " and "
+              << img2_path << std::endl;
   } else {
-    std::cout << "Not a valid image" << std::endl;
+    std::cout << "Not a valid image!" << std::endl;
   }
 }
 
 void Session::scale(int factor, const std::string &img_path,
                     const std::string &outimage_path) {
   Image *img = Image::imageFactory(img_path);
-  img->scale(factor);
-  img->save_as(outimage_path);
-  this->images.push_back(img);
+  if (img != nullptr) {
+    img->scale(factor);
+    img->save_as(outimage_path);
+    this->images.push_back(img);
+    std::cout << "Scaled image: " << img_path << " by factor of: " << factor
+              << std::endl;
+  } else {
+    std::cout << "Not a valid image!" << std::endl;
+  }
 }
