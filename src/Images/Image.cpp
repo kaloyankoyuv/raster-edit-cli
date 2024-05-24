@@ -35,8 +35,8 @@ Image *Image::imageFactory(const std::string &img_path) {
   } else {
     std::cout << "Can't create image, not a supported image format"
               << std::endl;
+    return nullptr;
   }
-  return nullptr;
 }
 
 void Image::skip_comments(std::ifstream &image) {
@@ -52,6 +52,9 @@ std::string Image::extract_extension(const std::string &img_path) {
   while (img_path[i] != '.') {
     extension.push_back(img_path[i]);
     i--;
+    if (i < 0) {
+      return "";
+    }
   }
   reverse(extension.begin(), extension.end());
   return extension;
