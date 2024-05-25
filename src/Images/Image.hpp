@@ -15,6 +15,7 @@ protected:
 
 public:
   virtual ~Image() = default;
+  virtual Image *clone() const = 0;
 
   std::string get_file_name() const;
   std::string get_type() const;

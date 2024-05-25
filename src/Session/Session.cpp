@@ -7,10 +7,32 @@ Session::Session(const std::string &img_path, int _id) {
   this->id = _id;
 }
 
+Session::Session(const Session &other) {
+  this->operations = other.operations;
+  for (Image *img : other.images) {
+    this->images.push_back(img->clone());
+  }
+  this->id = other.id;
+}
+
 Session::~Session() {
   for (Image *img : this->images) {
     delete img;
   }
+}
+
+Session &Session::operator=(const Session &other) {
+  if (this != &other) {
+    for (Image *img : this->images) {
+      delete img;
+    }
+    this->operations = other.operations;
+    for (Image *img : other.images) {
+      this->images.push_back(img->clone());
+    }
+    this->id = other.id;
+  }
+  return *this;
 }
 
 int Session::get_id() { return this->id; }

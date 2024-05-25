@@ -10,6 +10,8 @@ PGM_Image::PGM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+Image *PGM_Image::clone() const { return new PGM_Image(*this); }
+
 void PGM_Image::read(const std::string &_file_name) {
 
   if (this->extract_extension(_file_name) != "pgm") {

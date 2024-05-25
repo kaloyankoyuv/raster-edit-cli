@@ -11,6 +11,8 @@ PBM_Image::PBM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+Image *PBM_Image::clone() const { return new PBM_Image(*this); }
+
 void PBM_Image::read(const std::string &_file_name) {
   if (Image::extract_extension(_file_name) != "pbm") {
     std::cout << _file_name << " is not a PBM image!" << std::endl;

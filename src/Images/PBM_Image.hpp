@@ -12,6 +12,7 @@ private:
 
 public:
   PBM_Image(const std::string &);
+  Image *clone() const;
 
   void grayscale();
   void monochrome();

@@ -17,6 +17,7 @@ private:
 
 public:
   PPM_Image(const std::string &);
+  Image *clone() const;
 
   void grayscale();
   void monochrome();

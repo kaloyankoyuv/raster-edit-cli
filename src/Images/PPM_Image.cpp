@@ -10,6 +10,8 @@ PPM_Image::PPM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+Image *PPM_Image::clone() const { return new PPM_Image(*this); }
+
 void PPM_Image::read(const std::string &_file_name) {
   if (this->extract_extension(_file_name) != "ppm") {
     std::cout << _file_name << " is not a PPM image!" << std::endl;

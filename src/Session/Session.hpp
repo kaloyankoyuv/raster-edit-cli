@@ -11,7 +11,9 @@ private:
 
 public:
   Session(const std::string &, int);
+  Session(const Session &);
   ~Session();
+  Session &operator=(const Session &);
 
   int get_id();
 

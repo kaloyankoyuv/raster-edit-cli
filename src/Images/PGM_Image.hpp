@@ -13,6 +13,7 @@ private:
 
 public:
   PGM_Image(const std::string &);
+  Image *clone() const;
 
   void grayscale();
   void monochrome();
