@@ -10,6 +10,7 @@ class PPM_Image : public Image {
 private:
   int max_value;
   std::vector<Pixel> matrix;
+  std::vector<Pixel> old_matrix;
 
   void read(const std::string &);
   void write(const std::string &) const;
@@ -23,4 +24,5 @@ public:
   void rotate(const std::string &);
   void collage(const std::string &, const std::string &);
   void scale(int);
+  void undo();
 };

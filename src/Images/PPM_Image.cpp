@@ -3,7 +3,12 @@
 #include <fstream>
 #include <iostream>
 
-PPM_Image::PPM_Image(const std::string &_file_name) { this->read(_file_name); }
+PPM_Image::PPM_Image(const std::string &_file_name) {
+  this->read(_file_name);
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+}
 
 void PPM_Image::read(const std::string &_file_name) {
   if (this->extract_extension(_file_name) != "ppm") {
@@ -77,9 +82,13 @@ void PPM_Image::write(const std::string &outimage_name) const {
 }
 
 void PPM_Image::grayscale() {
-  int size = this->width * this->height;
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   int x;
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < this->width * this->height; i++) {
     x = (this->matrix[i].r + this->matrix[i].g + this->matrix[i].b) / 3;
     this->matrix[i].r = x;
     this->matrix[i].g = x;
@@ -88,12 +97,15 @@ void PPM_Image::grayscale() {
 }
 
 void PPM_Image::monochrome() {
-  int size = this->width * this->height;
-  int threshold = this->max_value / 2;
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   int x;
-  for (int i = 0; i < size; i++) {
+  for (int i = 0; i < this->width * this->height; i++) {
     x = (this->matrix[i].r + this->matrix[i].g + this->matrix[i].b) / 3;
-    if (x > threshold) {
+    if (x > this->max_value / 2) {
       this->matrix[i].r = this->max_value;
       this->matrix[i].g = this->max_value;
       this->matrix[i].b = this->max_value;
@@ -106,8 +118,12 @@ void PPM_Image::monochrome() {
 }
 
 void PPM_Image::negative() {
-  int size = this->width * this->height;
-  for (int i = 0; i < size; i++) {
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
+  for (int i = 0; i < this->width * this->height; i++) {
     this->matrix[i].r = this->max_value - this->matrix[i].r;
     this->matrix[i].g = this->max_value - this->matrix[i].g;
     this->matrix[i].b = this->max_value - this->matrix[i].b;
@@ -115,6 +131,10 @@ void PPM_Image::negative() {
 }
 
 void PPM_Image::rotate(const std::string &direction) {
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
 
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
@@ -134,5 +154,15 @@ void PPM_Image::collage(const std::string &direction, const std::string &img) {
 }
 
 void PPM_Image::scale(int factor) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   scale_matrix(this->matrix, this->width, this->height, factor);
+}
+
+void PPM_Image::undo() {
+  this->matrix = this->old_matrix;
+  this->width = this->old_width;
+  this->height = this->old_height;
 }

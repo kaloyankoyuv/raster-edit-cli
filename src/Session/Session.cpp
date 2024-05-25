@@ -63,7 +63,10 @@ void Session::info() const {
 
 void Session::undo() {
   if (this->operations.size() == 0) {
-    std::cout << "No pending operations!" << std::endl;
+    std::cout << "No pending operations, doing hard undo!" << std::endl;
+    for (Image *img : this->images) {
+      img->undo();
+    }
     return;
   }
   this->operations.pop_back();

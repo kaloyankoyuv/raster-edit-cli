@@ -3,7 +3,12 @@
 #include <fstream>
 #include <iostream>
 
-PGM_Image::PGM_Image(const std::string &_file_name) { this->read(_file_name); }
+PGM_Image::PGM_Image(const std::string &_file_name) {
+  this->read(_file_name);
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+}
 
 void PGM_Image::read(const std::string &_file_name) {
 
@@ -64,10 +69,14 @@ void PGM_Image::write(const std::string &outimage_name) const {
 }
 
 void PGM_Image::grayscale() {
-  std::cout << "Grayscale operation not supported" << std::endl;
+  std::cout << "Grayscale operation not supported for PGM images!" << std::endl;
 }
 
 void PGM_Image::monochrome() {
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
 
   int x = this->max_value / 2;
   int size = this->width * this->height;
@@ -81,13 +90,20 @@ void PGM_Image::monochrome() {
 }
 
 void PGM_Image::negative() {
-  int size = this->width * this->height;
-  for (int i = 0; i < size; i++) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
+  for (int i = 0; i < this->width * this->height; i++) {
     this->matrix[i] = this->max_value - this->matrix[i];
   }
 }
 
 void PGM_Image::rotate(const std::string &direction) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
 
@@ -105,5 +121,16 @@ void PGM_Image::collage(const std::string &direction, const std::string &img) {
 }
 
 void PGM_Image::scale(int factor) {
+
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   scale_matrix(this->matrix, this->width, this->height, factor);
+}
+
+void PGM_Image::undo() {
+  this->matrix = this->old_matrix;
+  this->width = this->old_width;
+  this->height = this->old_height;
 }

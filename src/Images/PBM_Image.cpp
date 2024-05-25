@@ -4,7 +4,12 @@
 #include <fstream>
 #include <iostream>
 
-PBM_Image::PBM_Image(const std::string &_file_name) { this->read(_file_name); }
+PBM_Image::PBM_Image(const std::string &_file_name) {
+  this->read(_file_name);
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+}
 
 void PBM_Image::read(const std::string &_file_name) {
   if (Image::extract_extension(_file_name) != "pbm") {
@@ -72,21 +77,29 @@ void PBM_Image::write(const std::string &outfile_name) const {
 }
 
 void PBM_Image::grayscale() {
-  std::cout << "Grayscale operation not supported for PBM images" << std::endl;
+  std::cout << "Grayscale operation not supported for PBM images!" << std::endl;
 }
 
 void PBM_Image::monochrome() {
-  std::cout << "Monochrome operation not supported for PBM images" << std::endl;
+  std::cout << "Monochrome operation not supported for PBM images!"
+            << std::endl;
 }
 
 void PBM_Image::negative() {
-  int size = this->width * this->height;
-  for (int i = 0; i < size; i++) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
+  for (int i = 0; i < this->width * this->height; i++) {
     this->matrix[i] = 1 - this->matrix[i];
   }
 }
 
 void PBM_Image::rotate(const std::string &direction) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
 
@@ -105,5 +118,15 @@ void PBM_Image::collage(const std::string &direction,
 }
 
 void PBM_Image::scale(int factor) {
+  this->old_matrix = this->matrix;
+  this->old_width = this->width;
+  this->old_height = this->height;
+
   scale_matrix(this->matrix, this->width, this->height, factor);
+}
+
+void PBM_Image::undo() {
+  this->matrix = this->old_matrix;
+  this->width = this->old_width;
+  this->height = this->old_height;
 }

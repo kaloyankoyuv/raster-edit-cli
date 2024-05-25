@@ -5,6 +5,7 @@
 class PBM_Image : public Image {
 private:
   std::vector<bool> matrix;
+  std::vector<bool> old_matrix;
 
   void read(const std::string &);
   void write(const std::string &) const;
@@ -18,4 +19,5 @@ public:
   void rotate(const std::string &);
   void collage(const std::string &, const std::string &);
   void scale(int);
+  void undo();
 };

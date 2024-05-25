@@ -5,8 +5,8 @@ class Image {
 protected:
   std::string file_name;
   std::string type;
-  int width;
-  int height;
+  int width, old_width;
+  int height, old_height;
 
   virtual void read(const std::string &) = 0;
   virtual void write(const std::string &) const = 0;
@@ -30,6 +30,7 @@ public:
   virtual void rotate(const std::string &) = 0;
   virtual void collage(const std::string &, const std::string &) = 0;
   virtual void scale(int) = 0;
+  virtual void undo() = 0;
 
   static Image *imageFactory(const std::string &);
   static std::string extract_extension(const std::string &);
