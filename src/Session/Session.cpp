@@ -148,6 +148,11 @@ void Session::collage(const std::string &direction,
     return;
   }
 
+  if (direction != "horizontal" && direction != "vertical") {
+    std::cout << "Not a valid collage direction" << std::endl;
+    return;
+  }
+
   Image *img1 = Image::imageFactory(img1_path);
   if (img1 != nullptr) {
     img1->collage(direction, img2_path);

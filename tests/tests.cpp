@@ -310,6 +310,182 @@ TEST_CASE("Test PGM binary image scale") {
   CHECK(testimg == correctimg);
 }
 
+TEST_CASE("Test PPM plain image file name") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+
+  CHECK(testimg.get_file_name() == "tests-images/sample-plain.ppm");
+}
+
+TEST_CASE("Test PPM plain image type") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+
+  CHECK(testimg.get_type() == "P3");
+}
+
+TEST_CASE("Test PPM plain image width") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+
+  CHECK(testimg.get_width() == 640);
+}
+
+TEST_CASE("Test PPM plain image height") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+
+  CHECK(testimg.get_height() == 426);
+}
+
+TEST_CASE("Test PPM plain image negative") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-negative.ppm");
+  testimg.negative();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image monochrome") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-monochrome.ppm");
+  testimg.monochrome();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image grayscale") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-grayscale.ppm");
+  testimg.grayscale();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image rotate left") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-rotate-left.ppm");
+  testimg.rotate("left");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image rotate right") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-rotate-right.ppm");
+  testimg.rotate("right");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image collage horizontal") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-collage-horizontal.ppm");
+  testimg.collage("horizontal", "tests-images/sample-plain.ppm");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image collage vertical") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-collage-vertical.ppm");
+  testimg.collage("vertical", "tests-images/sample-plain.ppm");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM plain image scale") {
+  PPM_Image testimg("tests-images/sample-plain.ppm");
+  PPM_Image correctimg("tests-images/sample-plain-scale.ppm");
+  testimg.scale(2);
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image file name") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+
+  CHECK(testimg.get_file_name() == "tests-images/sample-binary.ppm");
+}
+
+TEST_CASE("Test PPM binary image type") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+
+  CHECK(testimg.get_type() == "P6");
+}
+
+TEST_CASE("Test PPM binary image width") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+
+  CHECK(testimg.get_width() == 640);
+}
+
+TEST_CASE("Test PPM binary image height") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+
+  CHECK(testimg.get_height() == 426);
+}
+
+TEST_CASE("Test PPM binary image negative") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-negative.ppm");
+  testimg.negative();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image monochrome") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-monochrome.ppm");
+  testimg.monochrome();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image grayscale") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-grayscale.ppm");
+  testimg.grayscale();
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image rotate left") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-rotate-left.ppm");
+  testimg.rotate("left");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image rotate right") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-rotate-right.ppm");
+  testimg.rotate("right");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image collage horizontal") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-collage-horizontal.ppm");
+  testimg.collage("horizontal", "tests-images/sample-binary.ppm");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image collage vertical") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-collage-vertical.ppm");
+  testimg.collage("vertical", "tests-images/sample-binary.ppm");
+
+  CHECK(testimg == correctimg);
+}
+
+TEST_CASE("Test PPM binary image scale") {
+  PPM_Image testimg("tests-images/sample-binary.ppm");
+  PPM_Image correctimg("tests-images/sample-binary-scale.ppm");
+  testimg.scale(2);
+
+  CHECK(testimg == correctimg);
+}
+
 int main() {
 
   doctest::Context().run();
