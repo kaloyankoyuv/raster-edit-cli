@@ -10,6 +10,24 @@ PPM_Image::PPM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+bool PPM_Image::operator==(const PPM_Image &other) const {
+
+  if (this->width != other.width || this->height != other.height) {
+    return false;
+  }
+
+  bool b = true;
+  for (int i = 0; i < this->width * this->height; i++) {
+    if (this->matrix[i].r != other.matrix[i].r ||
+        this->matrix[i].g != other.matrix[i].g ||
+        this->matrix[i].b != other.matrix[i].b) {
+      b = false;
+    }
+  }
+  return this->type == other.type && this->max_value == other.max_value &&
+         this->width == other.width && this->height == other.height && b;
+}
+
 Image *PPM_Image::clone() const { return new PPM_Image(*this); }
 
 void PPM_Image::read(const std::string &_file_name) {

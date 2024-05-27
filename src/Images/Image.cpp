@@ -19,7 +19,6 @@ void Image::save() const { this->write(this->file_name); }
 
 void Image::save_as(const std::string &new_file_name) {
   this->write(new_file_name);
-  this->file_name = new_file_name;
 }
 
 Image *Image::imageFactory(const std::string &img_path) {

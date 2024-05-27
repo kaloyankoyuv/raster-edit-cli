@@ -10,6 +10,12 @@ PGM_Image::PGM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+bool PGM_Image::operator==(const PGM_Image &other) const {
+  return this->type == other.type && this->max_value == other.max_value &&
+         this->width == other.width && this->height == other.height &&
+         this->matrix == other.matrix;
+}
+
 Image *PGM_Image::clone() const { return new PGM_Image(*this); }
 
 void PGM_Image::read(const std::string &_file_name) {

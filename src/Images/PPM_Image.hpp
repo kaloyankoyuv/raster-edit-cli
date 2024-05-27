@@ -17,6 +17,7 @@ private:
 
 public:
   PPM_Image(const std::string &);
+  bool operator==(const PPM_Image &) const;
   Image *clone() const;
 
   void grayscale();
