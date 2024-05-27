@@ -26,6 +26,9 @@ int main() {
         sessions[curr_session_id]->add_image(input);
       }
 
+    } else if (input == "remove") {
+      std::cin >> input;
+      sessions[curr_session_id]->remove_image(input);
     } else if (input == "switch") {
       int x;
       std::cin >> x;

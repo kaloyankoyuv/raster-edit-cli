@@ -55,6 +55,17 @@ void Session::add_image(const std::string &img_path) {
   }
 }
 
+void Session::remove_image(const std::string &img_path) {
+  for (auto it = this->images.begin(); it != this->images.end(); ++it) {
+    if ((*it)->get_file_name() == img_path) {
+      this->images.erase(it);
+      std::cout << "Removed image: " << img_path << " from current session\n";
+      return;
+    }
+  }
+  std::cout << "No image named: " << img_path << " in current session\n";
+}
+
 void Session::add_operation(const std::string &operation) {
 
   if (operation == "rotate left" || operation == "rotate right" ||

@@ -18,6 +18,7 @@ public:
   int get_id();
 
   void add_image(const std::string &);
+  void remove_image(const std::string &);
   void add_operation(const std::string &);
   void info() const;
   void undo();
