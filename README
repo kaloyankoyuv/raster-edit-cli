@@ -1,6 +1,4 @@
 Simple raster image editor with command-line interface.
 
 TODO:
-  - Finish memory management in class Session
-  - Finish the logic of the program
   - Write tests

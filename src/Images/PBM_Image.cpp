@@ -11,6 +11,11 @@ PBM_Image::PBM_Image(const std::string &_file_name) {
   this->old_height = this->height;
 }
 
+bool PBM_Image::operator==(const PBM_Image &other) const {
+  return this->type == other.type && this->width == other.width &&
+         this->height == other.height && this->matrix == other.matrix;
+}
+
 Image *PBM_Image::clone() const { return new PBM_Image(*this); }
 
 void PBM_Image::read(const std::string &_file_name) {
@@ -35,14 +40,18 @@ void PBM_Image::read(const std::string &_file_name) {
   } else if (this->type == "P4") {
     image.ignore(1);
     unsigned char c;
-    for (int i = 0; i < this->width * this->height / 8; i++) {
-      image.read(reinterpret_cast<char *>(&c), 1);
-      int value = static_cast<int>(c);
-
-      std::bitset<8> bits(value);
-
-      for (int i = 7; i >= 0; --i) {
-        this->matrix.push_back(static_cast<bool>(bits[i]));
+    int rowBytes = (this->width + 7) / 8;
+    this->matrix.reserve(this->width * this->height);
+    for (int row = 0; row < this->height; ++row) {
+      for (int colByte = 0; colByte < rowBytes; ++colByte) {
+        image.read(reinterpret_cast<char *>(&c), 1);
+        std::bitset<8> bits(c);
+        for (int bit = 7; bit >= 0; --bit) {
+          int col = colByte * 8 + (7 - bit);
+          if (col < this->width) {
+            this->matrix.push_back(bits[bit]);
+          }
+        }
       }
     }
   }

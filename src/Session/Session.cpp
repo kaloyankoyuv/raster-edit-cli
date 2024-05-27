@@ -59,7 +59,7 @@ void Session::add_operation(const std::string &operation) {
 
   if (operation == "rotate left" || operation == "rotate right" ||
       operation == "grayscale" || operation == "monochrome" ||
-      operation == " negative") {
+      operation == "negative") {
 
     this->operations.push_back(operation);
     std::cout << "Added operation: " << operation << std::endl;
@@ -131,9 +131,9 @@ void Session::save() {
 }
 
 void Session::saveas(const std::string &img_path) {
+  std::cout << "Saved image: " << this->images[0]->get_file_name()
+            << " as: " << img_path << std::endl;
   this->images[0]->save_as(img_path);
-  std::cout << "Saved image: " << this->images[0] << " as: " << img_path
-            << std::endl;
 }
 
 void Session::collage(const std::string &direction,

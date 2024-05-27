@@ -12,6 +12,7 @@ private:
 
 public:
   PBM_Image(const std::string &);
+  bool operator==(const PBM_Image &) const;
   Image *clone() const;
 
   void grayscale();
