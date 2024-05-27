@@ -134,7 +134,10 @@ void Session::saveas(const std::string &img_path) {
   std::cout << "Saved image: " << this->images[0]->get_file_name()
             << " as: " << img_path << std::endl;
   this->images[0]->save_as(img_path);
-  this->images.push_back(Image::imageFactory(img_path));
+  Image *img = Image::imageFactory(img_path);
+  if (img != nullptr) {
+    this->images.push_back(img);
+  }
 }
 
 void Session::collage(const std::string &direction,
