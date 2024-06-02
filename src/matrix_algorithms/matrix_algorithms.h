@@ -3,6 +3,14 @@
 #include <string>
 #include <vector>
 
+/**
+   @brief Matrix transpose algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and transposes it. I.e makes the rows
+   to be columns and columns to be rows.
+*/
+
 template <typename T> void transpose_matrix(std::vector<T> &m, int &w, int &h) {
   std::vector<T> result(w * h);
   for (int i = 0; i < h; i++) {
@@ -13,6 +21,14 @@ template <typename T> void transpose_matrix(std::vector<T> &m, int &w, int &h) {
   m = result;
   std::swap(w, h);
 }
+
+/**
+   @brief Matrix horizontal flip algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and flips it horizontaly. I.e reverses
+   the columns of the matrix.
+*/
 
 template <typename T> void flip_h_matrix(std::vector<T> &m, int w, int h) {
   std::vector<T> result(w * h);
@@ -26,6 +42,14 @@ template <typename T> void flip_h_matrix(std::vector<T> &m, int w, int h) {
   m = result;
 }
 
+/**
+   @brief Matrix vertical flip algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and flips it verticaly. I.e reverses
+   the rows of the matrix.
+*/
+
 template <typename T> void flip_v_matrix(std::vector<T> &m, int w, int h) {
   std::vector<T> result(w * h);
 
@@ -38,6 +62,15 @@ template <typename T> void flip_v_matrix(std::vector<T> &m, int w, int h) {
   m = result;
 }
 
+/**
+   @brief Matrix rotate algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and rotates it by given direction.
+   It does that by transposing the matrix first, and
+   then flipping it in the correct direction.
+*/
+
 template <typename T>
 void rotate_matrix(std::vector<T> &m, int &w, int &h,
                    const std::string &direction) {
@@ -48,6 +81,14 @@ void rotate_matrix(std::vector<T> &m, int &w, int &h,
     flip_v_matrix(m, w, h);
   }
 }
+
+/**
+   @brief Concatenate matrix vertically algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and another matrix, that is represented
+   as a vector, and "glues" them together vertically.
+*/
 
 template <typename T>
 void cat_v_matrix(std::vector<T> &m1, int &w1, int &h1,
@@ -64,6 +105,14 @@ void cat_v_matrix(std::vector<T> &m1, int &w1, int &h1,
   }
   h1 += h2;
 }
+
+/**
+   @brief Concatenate matrix horizontally algorithm.
+
+   This function takes a matrix, that is represented
+   as a vector, and another matrix, that is represented
+   as a vector, and "glues" them together horizontally.
+*/
 
 template <typename T>
 void cat_h_matrix(std::vector<T> &m1, int &w1, int &h1,
@@ -94,6 +143,15 @@ void cat_h_matrix(std::vector<T> &m1, int &w1, int &h1,
 
   w1 += w2;
 }
+
+/**
+   @brief Scale matrix algorithm.
+
+   This function takes a matrix, represented
+   as a vector, and a factor and scales it by
+   the factor. I.e makes it bigger, i.e
+   increases "resolution".
+*/
 
 template <typename T>
 void scale_matrix(std::vector<T> &m, int &w, int &h, int factor) {
