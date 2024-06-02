@@ -12,3 +12,6 @@ Compilation and running:
 
   To delete this directory and the binary run "make clean" in the
   project's root.
+
+Github repo:
+https://github.com/kaloyankoyuv/raster-edit-cli
