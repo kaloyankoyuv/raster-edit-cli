@@ -45,8 +45,8 @@ public:
   int get_height() const;            /**< @brief Image height getter.*/
 
   void save() const;                 /**< @brief Saves image.*/
-  void save_as(const std::string &); /**< @brief Saves image as <file_name>.*/
-  void rename(const std::string &);  /**< @brief Renames image as <file_name>.*/
+  void save_as(const std::string &); /**< @brief Saves image as "file_name".*/
+  void rename(const std::string &);  /**< @brief Renames image as "file_name".*/
 
   /** @brief Grayscale algorithm.
 
