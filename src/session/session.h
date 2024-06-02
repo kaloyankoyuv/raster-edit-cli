@@ -1,5 +1,5 @@
 #pragma once
-#include "../Images/Image.hpp"
+#include "../images/image.h"
 #include <string>
 #include <vector>
 
@@ -10,14 +10,16 @@ private:
   int id;
 
 public:
-  Session(const std::string &, int);
+  Session(int);
   Session(const Session &);
   ~Session();
   Session &operator=(const Session &);
 
   int get_id();
+  std::vector<std::string> get_operations();
+  std::vector<Image *> get_images();
 
-  void add_image(const std::string &);
+  bool add_image(const std::string &);
   void remove_image(const std::string &);
   void add_operation(const std::string &);
   void info() const;

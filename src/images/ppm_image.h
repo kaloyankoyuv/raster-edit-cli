@@ -1,12 +1,12 @@
 #pragma once
-#include "Image.hpp"
+#include "image.h"
 #include <vector>
 
 struct Pixel {
   int r, g, b;
 };
 
-class PPM_Image : public Image {
+class PPMImage : public Image {
 private:
   int max_value;
   std::vector<Pixel> matrix;
@@ -16,8 +16,8 @@ private:
   void write(const std::string &) const;
 
 public:
-  PPM_Image(const std::string &);
-  bool operator==(const PPM_Image &) const;
+  PPMImage(const std::string &);
+  bool operator==(const PPMImage &) const;
   Image *clone() const;
 
   void grayscale();

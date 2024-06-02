@@ -24,6 +24,7 @@ public:
 
   void save() const;
   void save_as(const std::string &);
+  void rename(const std::string &);
 
   virtual void grayscale() = 0;
   virtual void monochrome() = 0;
@@ -33,6 +34,6 @@ public:
   virtual void scale(int) = 0;
   virtual void undo() = 0;
 
-  static Image *imageFactory(const std::string &);
+  static Image *image_factory(const std::string &);
   static std::string extract_extension(const std::string &);
 };

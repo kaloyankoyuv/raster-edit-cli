@@ -1,8 +1,9 @@
-#include "Image.hpp"
-#include "PBM_Image.hpp"
-#include "PGM_Image.hpp"
-#include "PPM_Image.hpp"
+#include "image.h"
+#include "pbm_image.h"
+#include "pgm_image.h"
+#include "ppm_image.h"
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -21,19 +22,27 @@ void Image::save_as(const std::string &new_file_name) {
   this->write(new_file_name);
 }
 
-Image *Image::imageFactory(const std::string &img_path) {
+void Image::rename(const std::string &new_file_name) {
+  this->file_name = new_file_name;
+}
+
+Image *Image::image_factory(const std::string &img_path) {
+
+  if (!std::filesystem::exists(img_path)) {
+    std::cout << "File does not exist!\n";
+    return nullptr;
+  }
 
   std::string extension = Image::extract_extension(img_path);
 
   if (extension == "pbm") {
-    return new PBM_Image(img_path);
+    return new PBMImage(img_path);
   } else if (extension == "pgm") {
-    return new PGM_Image(img_path);
+    return new PGMImage(img_path);
   } else if (extension == "ppm") {
-    return new PPM_Image(img_path);
+    return new PPMImage(img_path);
   } else {
-    std::cout << "Can't create image, not a supported image format"
-              << std::endl;
+    std::cout << "Can't create image, not a supported image format\n";
     return nullptr;
   }
 }

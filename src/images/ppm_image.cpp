@@ -1,16 +1,17 @@
-#include "PPM_Image.hpp"
-#include "../MatrixAlgorithms/matrix_algorithms.hpp"
+#include "ppm_image.h"
+#include "../matrix_algorithms/matrix_algorithms.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
-PPM_Image::PPM_Image(const std::string &_file_name) {
+PPMImage::PPMImage(const std::string &_file_name) {
   this->read(_file_name);
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
 }
 
-bool PPM_Image::operator==(const PPM_Image &other) const {
+bool PPMImage::operator==(const PPMImage &other) const {
 
   if (this->width != other.width || this->height != other.height) {
     return false;
@@ -28,12 +29,10 @@ bool PPM_Image::operator==(const PPM_Image &other) const {
          this->width == other.width && this->height == other.height && b;
 }
 
-Image *PPM_Image::clone() const { return new PPM_Image(*this); }
+Image *PPMImage::clone() const { return new PPMImage(*this); }
 
-void PPM_Image::read(const std::string &_file_name) {
-  if (this->extract_extension(_file_name) != "ppm") {
-    std::cout << _file_name << " is not a PPM image!" << std::endl;
-  }
+void PPMImage::read(const std::string &_file_name) {
+
   std::ifstream image(_file_name);
 
   this->file_name = _file_name;
@@ -72,7 +71,7 @@ void PPM_Image::read(const std::string &_file_name) {
   image.close();
 }
 
-void PPM_Image::write(const std::string &outimage_name) const {
+void PPMImage::write(const std::string &outimage_name) const {
   std::ofstream out(outimage_name);
   out << this->type << "\n"
       << this->width << " " << this->height << "\n"
@@ -101,7 +100,7 @@ void PPM_Image::write(const std::string &outimage_name) const {
   out.close();
 }
 
-void PPM_Image::grayscale() {
+void PPMImage::grayscale() {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -116,7 +115,7 @@ void PPM_Image::grayscale() {
   }
 }
 
-void PPM_Image::monochrome() {
+void PPMImage::monochrome() {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -137,7 +136,7 @@ void PPM_Image::monochrome() {
   }
 }
 
-void PPM_Image::negative() {
+void PPMImage::negative() {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -150,7 +149,7 @@ void PPM_Image::negative() {
   }
 }
 
-void PPM_Image::rotate(const std::string &direction) {
+void PPMImage::rotate(const std::string &direction) {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -159,9 +158,19 @@ void PPM_Image::rotate(const std::string &direction) {
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
 
-void PPM_Image::collage(const std::string &direction, const std::string &img) {
+void PPMImage::collage(const std::string &direction,
+                       const std::string &img_path) {
 
-  PPM_Image other(img);
+  if (!std::filesystem::exists(img_path)) {
+    std::cout << "File: " << img_path << " does not exists!\n";
+    return;
+  }
+
+  if (this->extract_extension(img_path) != "ppm") {
+    std::cout << img_path << " is not a PPM image!\n";
+  }
+
+  PPMImage other(img_path);
 
   if (direction == "vertical") {
     cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
@@ -173,7 +182,7 @@ void PPM_Image::collage(const std::string &direction, const std::string &img) {
   }
 }
 
-void PPM_Image::scale(int factor) {
+void PPMImage::scale(int factor) {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -181,7 +190,7 @@ void PPM_Image::scale(int factor) {
   scale_matrix(this->matrix, this->width, this->height, factor);
 }
 
-void PPM_Image::undo() {
+void PPMImage::undo() {
   this->matrix = this->old_matrix;
   this->width = this->old_width;
   this->height = this->old_height;

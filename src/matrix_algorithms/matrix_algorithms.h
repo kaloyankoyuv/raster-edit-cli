@@ -54,7 +54,7 @@ void cat_v_matrix(std::vector<T> &m1, int &w1, int &h1,
                   const std::vector<T> &m2, int w2, int h2) {
 
   if (w1 != w2) {
-    std::cout << "Width1 != Width2" << std::endl;
+    std::cout << "Width1 != Width2\n";
     return;
   }
 
@@ -70,7 +70,7 @@ void cat_h_matrix(std::vector<T> &m1, int &w1, int &h1,
                   const std::vector<T> &m2, int w2, int h2) {
 
   if (h1 != h2) {
-    std::cout << "Height1 != Height2" << std::endl;
+    std::cout << "Height1 != Height2\n";
     return;
   }
 

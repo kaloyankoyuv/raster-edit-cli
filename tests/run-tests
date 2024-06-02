@@ -1,6 +1,6 @@
 #!/bin/bash
 
-g++ tests.cpp ../src/Images/*.cpp ../src/Session/*.cpp -o tests &&
+g++ tests.cpp ../src/images/*.cpp ../src/session/*.cpp -o tests &&
 ./tests &&
 rm tests
 

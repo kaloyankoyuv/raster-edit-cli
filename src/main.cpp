@@ -1,4 +1,4 @@
-#include "Session/Session.hpp"
+#include "session/session.h"
 #include <iostream>
 
 int main() {
@@ -11,21 +11,27 @@ int main() {
     std::cout << "Enter command > ";
     std::cin >> input;
     if ((input != "load" && input != "help") && id_num == -1) {
-      std::cout << "No loaded session" << std::endl;
+      std::cout << "No loaded session\n";
       continue;
     }
     if (input == "load") {
       std::cin >> input;
-      sessions.push_back(new Session(input, ++id_num));
+      Session *s = new Session(++id_num);
+      if (s->add_image(input)) {
+        sessions.push_back(s);
+      } else {
+        delete s;
+        id_num--;
+        std::cout << "Failed loading session!\n";
+        continue;
+      }
       curr_session_id = id_num;
-      std::cout << "Session with id: " << curr_session_id << " is added"
-                << std::endl;
+      std::cout << "Session with id: " << curr_session_id << " is added!\n";
     } else if (input == "add") {
       std::cin >> input;
       if (curr_session_id != -1) {
         sessions[curr_session_id]->add_image(input);
       }
-
     } else if (input == "remove") {
       std::cin >> input;
       sessions[curr_session_id]->remove_image(input);
@@ -34,24 +40,22 @@ int main() {
       std::cin >> x;
       if (x >= 0 && x <= id_num) {
         curr_session_id = x;
-        std::cout << "Switched to session with id: " << curr_session_id
-                  << std::endl;
+        std::cout << "Switched to session with id: " << curr_session_id << "\n";
       } else {
-        std::cout << "No session with id: " << x << std::endl;
+        std::cout << "No session with id: " << x << "\n";
       }
     } else if (input == "undo") {
       sessions[curr_session_id]->undo();
-
     } else if (input == "session") {
       std::cin >> input;
       if (input == "info") {
         sessions[curr_session_id]->info();
       }
     } else if (input == "exit") {
-      std::cout << "Exiting!" << std::endl;
+      std::cout << "Exiting!\n";
       break;
     } else if (input == "help") {
-      std::cout << "RTFM" << std::endl;
+      std::cout << "RTFM\n";
     } else if (input == "apply") {
       sessions[curr_session_id]->apply();
     } else if (input == "save") {
@@ -82,7 +86,6 @@ int main() {
       std::string outimage;
       std::cin >> outimage;
       sessions[curr_session_id]->collage(direction, img1, img2, outimage);
-
     } else if (input == "scale") {
       int factor;
       std::cin >> factor;

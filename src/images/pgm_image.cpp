@@ -1,29 +1,25 @@
-#include "PGM_Image.hpp"
-#include "../MatrixAlgorithms/matrix_algorithms.hpp"
+#include "pgm_image.h"
+#include "../matrix_algorithms/matrix_algorithms.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
-PGM_Image::PGM_Image(const std::string &_file_name) {
+PGMImage::PGMImage(const std::string &_file_name) {
   this->read(_file_name);
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
 }
 
-bool PGM_Image::operator==(const PGM_Image &other) const {
+bool PGMImage::operator==(const PGMImage &other) const {
   return this->type == other.type && this->max_value == other.max_value &&
          this->width == other.width && this->height == other.height &&
          this->matrix == other.matrix;
 }
 
-Image *PGM_Image::clone() const { return new PGM_Image(*this); }
+Image *PGMImage::clone() const { return new PGMImage(*this); }
 
-void PGM_Image::read(const std::string &_file_name) {
-
-  if (this->extract_extension(_file_name) != "pgm") {
-    std::cout << _file_name << "is not a PGM image!" << std::endl;
-    return;
-  }
+void PGMImage::read(const std::string &_file_name) {
 
   std::ifstream image(_file_name);
 
@@ -53,7 +49,7 @@ void PGM_Image::read(const std::string &_file_name) {
   image.close();
 }
 
-void PGM_Image::write(const std::string &outimage_name) const {
+void PGMImage::write(const std::string &outimage_name) const {
   std::ofstream out(outimage_name);
   out << this->type << "\n"
       << this->width << " " << this->height << "\n"
@@ -76,11 +72,11 @@ void PGM_Image::write(const std::string &outimage_name) const {
   out.close();
 }
 
-void PGM_Image::grayscale() {
-  std::cout << "Grayscale operation not supported for PGM images!" << std::endl;
+void PGMImage::grayscale() {
+  std::cout << "Grayscale operation not supported for PGM images!\n";
 }
 
-void PGM_Image::monochrome() {
+void PGMImage::monochrome() {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -97,7 +93,7 @@ void PGM_Image::monochrome() {
   }
 }
 
-void PGM_Image::negative() {
+void PGMImage::negative() {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -107,7 +103,7 @@ void PGM_Image::negative() {
   }
 }
 
-void PGM_Image::rotate(const std::string &direction) {
+void PGMImage::rotate(const std::string &direction) {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -115,8 +111,20 @@ void PGM_Image::rotate(const std::string &direction) {
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
 
-void PGM_Image::collage(const std::string &direction, const std::string &img) {
-  PGM_Image other(img);
+void PGMImage::collage(const std::string &direction,
+                       const std::string &img_path) {
+
+  if (!std::filesystem::exists(img_path)) {
+    std::cout << "File: " << img_path << " does not exists!\n";
+    return;
+  }
+
+  if (this->extract_extension(img_path) != "pgm") {
+    std::cout << img_path << "is not a PGM image!\n";
+    return;
+  }
+
+  PGMImage other(img_path);
 
   if (direction == "vertical") {
     cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
@@ -128,7 +136,7 @@ void PGM_Image::collage(const std::string &direction, const std::string &img) {
   }
 }
 
-void PGM_Image::scale(int factor) {
+void PGMImage::scale(int factor) {
 
   this->old_matrix = this->matrix;
   this->old_width = this->width;
@@ -137,7 +145,7 @@ void PGM_Image::scale(int factor) {
   scale_matrix(this->matrix, this->width, this->height, factor);
 }
 
-void PGM_Image::undo() {
+void PGMImage::undo() {
   this->matrix = this->old_matrix;
   this->width = this->old_width;
   this->height = this->old_height;

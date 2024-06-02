@@ -1,18 +1,19 @@
 #pragma once
-#include "Image.hpp"
+#include "image.h"
 #include <vector>
 
-class PBM_Image : public Image {
+class PGMImage : public Image {
 private:
-  std::vector<bool> matrix;
-  std::vector<bool> old_matrix;
+  int max_value;
+  std::vector<int> matrix;
+  std::vector<int> old_matrix;
 
   void read(const std::string &);
   void write(const std::string &) const;
 
 public:
-  PBM_Image(const std::string &);
-  bool operator==(const PBM_Image &) const;
+  PGMImage(const std::string &);
+  bool operator==(const PGMImage &) const;
   Image *clone() const;
 
   void grayscale();

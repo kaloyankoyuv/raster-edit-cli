@@ -1,28 +1,25 @@
-#include "PBM_Image.hpp"
-#include "../MatrixAlgorithms/matrix_algorithms.hpp"
+#include "pbm_image.h"
+#include "../matrix_algorithms/matrix_algorithms.h"
 #include <bitset>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 
-PBM_Image::PBM_Image(const std::string &_file_name) {
+PBMImage::PBMImage(const std::string &_file_name) {
   this->read(_file_name);
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
 }
 
-bool PBM_Image::operator==(const PBM_Image &other) const {
+bool PBMImage::operator==(const PBMImage &other) const {
   return this->type == other.type && this->width == other.width &&
          this->height == other.height && this->matrix == other.matrix;
 }
 
-Image *PBM_Image::clone() const { return new PBM_Image(*this); }
+Image *PBMImage::clone() const { return new PBMImage(*this); }
 
-void PBM_Image::read(const std::string &_file_name) {
-  if (Image::extract_extension(_file_name) != "pbm") {
-    std::cout << _file_name << " is not a PBM image!" << std::endl;
-    return;
-  }
+void PBMImage::read(const std::string &_file_name) {
   std::ifstream image(_file_name);
 
   this->file_name = _file_name;
@@ -40,14 +37,14 @@ void PBM_Image::read(const std::string &_file_name) {
   } else if (this->type == "P4") {
     image.ignore(1);
     unsigned char c;
-    int rowBytes = (this->width + 7) / 8;
+    int row_bytes = (this->width + 7) / 8;
     this->matrix.reserve(this->width * this->height);
-    for (int row = 0; row < this->height; ++row) {
-      for (int colByte = 0; colByte < rowBytes; ++colByte) {
+    for (int row = 0; row < this->height; row++) {
+      for (int col_byte = 0; col_byte < row_bytes; col_byte++) {
         image.read(reinterpret_cast<char *>(&c), 1);
         std::bitset<8> bits(c);
-        for (int bit = 7; bit >= 0; --bit) {
-          int col = colByte * 8 + (7 - bit);
+        for (int bit = 7; bit >= 0; bit--) {
+          int col = col_byte * 8 + (7 - bit);
           if (col < this->width) {
             this->matrix.push_back(bits[bit]);
           }
@@ -58,7 +55,7 @@ void PBM_Image::read(const std::string &_file_name) {
   image.close();
 }
 
-void PBM_Image::write(const std::string &outfile_name) const {
+void PBMImage::write(const std::string &outfile_name) const {
   std::ofstream out(outfile_name);
   out << this->type << "\n" << this->width << " " << this->height << '\n';
   if (this->type == "P1") {
@@ -87,16 +84,15 @@ void PBM_Image::write(const std::string &outfile_name) const {
   out.close();
 }
 
-void PBM_Image::grayscale() {
-  std::cout << "Grayscale operation not supported for PBM images!" << std::endl;
+void PBMImage::grayscale() {
+  std::cout << "Grayscale operation not supported for PBM images!\n";
 }
 
-void PBM_Image::monochrome() {
-  std::cout << "Monochrome operation not supported for PBM images!"
-            << std::endl;
+void PBMImage::monochrome() {
+  std::cout << "Monochrome operation not supported for PBM images!\n";
 }
 
-void PBM_Image::negative() {
+void PBMImage::negative() {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -106,7 +102,7 @@ void PBM_Image::negative() {
   }
 }
 
-void PBM_Image::rotate(const std::string &direction) {
+void PBMImage::rotate(const std::string &direction) {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -114,10 +110,20 @@ void PBM_Image::rotate(const std::string &direction) {
   rotate_matrix(this->matrix, this->width, this->height, direction);
 }
 
-void PBM_Image::collage(const std::string &direction,
-                        const std::string &img_path) {
+void PBMImage::collage(const std::string &direction,
+                       const std::string &img_path) {
 
-  PBM_Image other(img_path);
+  if (!std::filesystem::exists(img_path)) {
+    std::cout << "File: " << img_path << " does not exists!\n";
+    return;
+  }
+
+  if (Image::extract_extension(img_path) != "pbm") {
+    std::cout << img_path << " is not a PBM image!\n";
+    return;
+  }
+
+  PBMImage other(img_path);
   if (direction == "vertical") {
     cat_v_matrix(this->matrix, this->width, this->height, other.matrix,
                  other.width, other.height);
@@ -128,7 +134,7 @@ void PBM_Image::collage(const std::string &direction,
   }
 }
 
-void PBM_Image::scale(int factor) {
+void PBMImage::scale(int factor) {
   this->old_matrix = this->matrix;
   this->old_width = this->width;
   this->old_height = this->height;
@@ -136,7 +142,7 @@ void PBM_Image::scale(int factor) {
   scale_matrix(this->matrix, this->width, this->height, factor);
 }
 
-void PBM_Image::undo() {
+void PBMImage::undo() {
   this->matrix = this->old_matrix;
   this->width = this->old_width;
   this->height = this->old_height;
