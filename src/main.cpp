@@ -1,6 +1,14 @@
 #include "session/session.h"
 #include <iostream>
 
+/**
+   @brief A help function.
+
+   Prints all the available commands that are
+   supported by the editor. This function is called
+   when the user types "help" at the prompt.
+*/
+
 void help() {
   std::cout
       << "The following commands are supported:\n"
@@ -30,6 +38,13 @@ void help() {
          "of <factor> image and saves it to <outfile>. The scaled image is "
          "then added to the current session\n";
 }
+
+/**
+   @brief The main function
+
+   In the main function is the main logic of the program.
+   I.e the control flow of the program.
+*/
 
 int main() {
 
