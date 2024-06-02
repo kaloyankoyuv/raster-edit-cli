@@ -1,1 +1,12 @@
 Simple raster image editor with command-line interface.
+
+Documentation:
+  Open docs/html/index.html to read documentation.
+
+Compilation and running:
+  Compile the program by running "make" in the
+  project's root. This will create a directory
+  named "build" where the the binary is placed.
+
+  To delete this directory and the binary
+  run "make clean".
