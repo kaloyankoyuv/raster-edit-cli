@@ -7,8 +7,7 @@ Documentation:
 Compilation and running:
 
   Compile the program by running "make" in the project's root. This
-  will create a directory named "build" where the the binary is
-  placed.
+  will create a directory named "build" where the binary is placed.
 
   To delete this directory and the binary run "make clean" in the
   project's root.
